@@ -1,0 +1,43 @@
+.questionnaire .top ul li {
+float: left;
+margin-bottom: 10px;
+}
+.questionnaire .top ul{
+    overflow: hidden;
+}
+.questionnaire .top ul li {
+    margin-right: 10px;
+}
+.detail_alert>p{
+    line-height: 28px;
+    font-size: 15px;
+}
+.detail_alert>p>span{
+    color: #999;
+    display: inline-block;
+    width: 80px;
+    text-align: right;
+}
+.detail_alert >h3{
+    font-weight: 700;
+    border-bottom: 1px solid #ccc;
+    margin-top: 10px;
+}
+.detail_alert ul li h3{
+    color: #333;
+    font-size: 16px;
+}
+.detail_alert ul li p{
+    margin-left: 20px;
+    line-height: 30px;
+}
+.detail_alert ul li span:first-child{
+    margin-left: 30px;
+}
+.detail_alert ul li span{
+    margin-left: 10px;
+    color: #999;
+}
+.detail_alert ul li span.select{
+    color: red;
+}

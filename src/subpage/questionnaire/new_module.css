@@ -1,0 +1,105 @@
+.new_module>ul {
+    padding-left: 0px;
+    padding-top: 20px;
+}
+.new_module ul.ul li>span{
+    width: 96px;
+    display: inline-block;
+    text-align: right;
+}
+.new_module ul li {
+    padding-bottom: 5px;
+}
+
+.new_module ol {
+    overflow: hidden;
+}
+
+.new_module ol p {
+    padding-bottom: 10px;
+    float: left;
+    line-height: 32px;
+    margin-right: 10px;
+}
+
+.new_module ol li {
+    float: left;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.new_module ul .sub_p {
+    margin-bottom: 8px !important;
+}
+
+.new_module ul .sub_li {
+    margin-left: 54px;
+}
+
+.new_module ul .sub_li_button {
+    margin-left: 70px;
+}
+
+.new_module ul .sub_li button {
+    margin-left: 5px;
+}
+
+.new_module ul .sub_li span {
+    margin-right: 5px;
+}
+
+.new_module .left {
+    float: left;
+    position: relative;
+}
+
+.new_module .left:after {
+    content: '';
+    position: absolute;
+    top: 16px;
+    right: -24px;
+    width: 1px;
+    height: 80%;
+    background-color: #ccc;
+}
+
+.new_module .left button {
+    display: block;
+    margin-top: 5px;
+}
+
+.new_module .con h3 {
+    font: 700 normal 18px/20px 'Microsoft Yahei';
+}
+
+.new_module .right {
+    margin-left: 100px;
+}
+
+.new_module .eachOne {
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 10px;
+    position: relative;
+    transition: 0.3s all;
+}
+.new_module .eachOne:hover{
+    background-color: rgba(234,145,23,0.15);
+}
+.new_module .eachOne .index{
+    position: absolute;
+    top: 10px;
+    left: -40px;
+    font: 700 normal 24px/20px 'Microsoft Yahei';
+}
+.new_module .is_must {
+    margin-bottom: 10px;
+}
+.new_module .bot{
+    text-align: center;
+}
+.new_module .ant-spin-nested-loading > div > .ant-spin{
+    background-color: rgba(0,0,0,.1);
+    color: #999;
+}

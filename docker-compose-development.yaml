@@ -1,0 +1,5 @@
+colourlife_cgjwenjuan_services:
+  build: .
+  tty: true
+  command: ./run.sh
+

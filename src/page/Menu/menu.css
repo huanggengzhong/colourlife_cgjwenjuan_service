@@ -1,0 +1,19 @@
+._menuWrapper{
+   
+}
+._table{
+    margin-top:10px;
+    margin-right:20px;
+    width:100%;
+}
+._addMenu{
+    margin-top:10px;
+    padding-right:20px;
+    text-align: right;
+}
+.ant-cascader-menu:only-child,.ant-cascader-menus .ant-cascader-menus-placement-bottomLeft{
+    width:160px;
+}
+.ant-input-number{
+    width:300px;
+}

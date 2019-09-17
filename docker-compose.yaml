@@ -1,0 +1,8 @@
+colourlife_cgjwenjuan_services:
+  image: "${image_name}"
+  ports:
+    - "7108:7108"
+  volumes:
+       - "/etc/localtime:/etc/localtime:ro"
+       - "/data/logs/nodejs/colourlife_cgjwenjuan_service/:/var/log/nginx"
+  restart: always  

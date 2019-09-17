@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1,minimum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <title>彩管家问卷调查</title>
+    <link rel="stylesheet" href="./init.css">
+    <style>
+        body {
+            background-color: #f6f6f6;
+        }
+
+        .top>.left {
+            text-align: center;
+            height: 98px;
+            margin-top: 8px;
+            padding-left: 17px;
+            background-color:  #fff;
+            overflow: hidden;
+        }
+        
+        .top .left .img {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background-color: #eee;
+            margin: 22px 10px;
+            float: left;
+            overflow: hidden;
+        }
+
+        .top .left .img img {
+            height: 100%;
+        }
+        .top >.left>p{
+            margin-left: 60px;
+            text-align: left;
+            padding-top: 26px;
+        }
+        .top >.left>span{
+            display: block;text-align: left;
+        }
+        .top .left>p {
+            font-size: 16px;
+            font-family: 'Microsoft Yahei';
+        }
+        .top  >ul>.q_box>li p{
+            line-height: 26px;
+            padding-top: 40px;
+            padding-right: 100px;
+            height: 52px;
+            overflow: hidden;
+        }
+        .top .left span {
+            font-size: 14px;
+            color: #999FAA;
+        }
+
+        ul {
+            padding: 10px;
+        }
+        ul li{
+            margin: 10px;
+            height: 120px;
+            background-color: #fff;
+            border-radius: 6px;
+            position: relative;
+        }
+        ul p {
+            margin-bottom: 10px;
+            padding-left: 10px;
+        }
+
+        ul li .right{
+            float: right;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+        ul li .left{
+            float: left;
+            z-index: 20;
+            position: relative;
+        }
+        ul li .right img{
+            margin-top: 10px;
+            height: 100px;
+        }
+        ul li .left p{
+            line-height: 100px;
+        }
+        ul .q_box .button {
+            overflow: hidden;
+            background-color: #fff;
+            border-radius: 10px;
+            color: #131719;
+            line-height: 40px;
+            text-align: center;
+            margin: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top">
+        <div class="left" id="left">
+            <div class="img">
+                <img src="./img/more_icon_defaulthead.png" alt="没有图片"></div>
+            <div class="right">
+                    <p>未能获取 </p><span>未能获取</span>
+            </div>
+        </div>
+        <!-- <div class="right"><p>已获得饭票奖励</p>
+        <span>2000</span>
+    <div class="button">查看明细</div></div> -->
+        <ul>
+            <!-- <p>问卷列表:</p> -->
+            <div class="q_box" id="q_box">
+                <li>
+                    <div class="button"></div>
+                </li>
+            </div>
+        </ul>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vConsole/3.2.2/vconsole.min.js"></script>
+
+    <script>
+        function alert_(message) {
+            var span = document.createElement('span');
+            span.style.padding = '2px 10px';
+            span.style.borderRadius = '6px';
+            span.style.backgroundColor = 'rgba(0,0,0,.6)';
+            span.style.color = '#fff'
+            span.innerHTML = message;
+            var div = document.createElement('div');
+            div.style.position = 'fixed';
+            div.style.top = '0';
+            div.style.zIndex = 21;
+            div.style.width = '100%';
+            div.style.backgroundColor = 'rgba(0,0,0,.3)';
+            div.style.height = '100%';
+            div.style.textAlign = 'center';
+            div.style.display = 'block';
+            var div1 = document.createElement('div');
+            div1.style.position = 'absolute';
+            div1.style.top = '45%';
+            div1.style.width = '100%';
+            div1.appendChild(span)
+            div.appendChild(div1);
+            window.document.body.appendChild(div);
+            setTimeout(function () {
+                div.style.display = 'none';
+            }, 2000)
+        }
+        //获取search
+        function GetQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return (r[2]);
+            return null;
+        }
+
+        function ajax(opt) {
+            opt = opt || {};
+            opt.method = opt.method.toUpperCase() || 'POST';
+            opt.url = opt.url || '';
+            opt.async = opt.async || true;
+            opt.data = opt.data || null;
+            opt.success = opt.success || function () {};
+            var xmlHttp = null;
+            if (XMLHttpRequest) {
+                xmlHttp = new XMLHttpRequest();
+            } else {
+                xmlHttp = new ActiveXObject('Microsoft.XMLHTTP');
+            }
+            var params = [];
+            for (var key in opt.data) {
+                params.push(key + '=' + opt.data[key]);
+            }
+            var postData = params.join('&');
+            if (opt.method.toUpperCase() === 'POST') {
+                xmlHttp.open(opt.method, opt.url, opt.async);
+                xmlHttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8');
+                xmlHttp.send(postData);
+            } else if (opt.method.toUpperCase() === 'GET') {
+                xmlHttp.open(opt.method, opt.url + '?' + postData, opt.async);
+                xmlHttp.send(null);
+            }
+            xmlHttp.onreadystatechange = function () {
+                if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                    opt.success(xmlHttp.responseText);
+                }
+            };
+        }
+        var url = document.domain,
+            targetUrl;
+        if (url === 'wenjuan-cgj.colourlife.com' || url === "yun.colourlife.com") {
+            targetUrl = 'https://service-czy.colourlife.com';
+        } else if (url === 'wenjuan-cgjtest.colourlife.com') {
+            targetUrl = 'https://service-czytest.colourlife.com';
+            var vConsole = new VConsole();
+        } else {
+            targetUrl = 'https://service-czytest.colourlife.com';
+            var vConsole = new VConsole();
+        }
+        var access_token = GetQueryString('access_token');
+        console.log(access_token)
+        //获取当前信息
+        ajax({
+            url: targetUrl + '/cgj/font/userinfo',
+            method: "get",
+            data: {
+                access_token: access_token
+            },
+            success: function (data) {
+                data = JSON.parse(data)
+                console.log(data);
+                if (data.code == 0) {
+                    document.querySelector('#left').innerHTML = '<div class="img"><img src="' + data.content
+                        .portrait + '" alt="没有图片"></div><p>' + (data.content.name || '未能获取') +
+                        '</p><span>' + (data.content.department || '未能获取') + '</span>'
+                } else {
+                    alert_(data.message)
+                }
+            }
+        })
+        //获取问卷调查
+        ajax({
+            url: targetUrl + '/cgj/font/questionlist',
+            method: "get",
+            data: {
+                access_token: access_token
+            },
+            success: function (data) {
+                data = JSON.parse(data)
+                console.log(data);
+                if (data.code == 0) {
+                    var str = ''
+                    for (var i = 0; i < data.content
+                        .length; i++
+                        ) { //+','+data.content[i].name onclick="gotoDetail('+data.content[i].id+')"
+                        str += '<li><div class="button" data-id=' + data.content[i].id + '><div class="left"><p>' + data.content[i].name + '</p></div><div class="right"><img src="./img/pic_wenquan.png"/></div></div></li>'
+                    }
+                    document.querySelector('#q_box').innerHTML = str;
+
+                    setTimeout(function () {
+                        //console.log(document.querySelector('#q_box'));
+                        for (var i = 0; i < document.querySelectorAll('#q_box>li >.button')
+                            .length; i++) {
+                            document.querySelectorAll('#q_box>li >.button')[i].onclick =
+                        function () {
+                                //console.log(this.children[0].children[0].innerHTML)
+                                gotoDetail(this.getAttribute("data-id"), this.children[0].children[0].innerHTML)
+                            }
+                        }
+                    }, 100)
+
+                } else {
+                    alert_(data.message)
+                }
+            }
+        })
+        //跳转到问卷详情
+        function gotoDetail(id, name) {
+            //console.log(id, name);
+            window.location.href = './wenjuan_h5.html?access_token=' + access_token + '&id=' + id + '&name=' + name;
+        }
+    </script>
+</body>
+
+</html>

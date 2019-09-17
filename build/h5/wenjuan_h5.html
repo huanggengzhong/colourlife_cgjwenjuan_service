@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1,minimum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>问卷调查</title>
+    <style>
+        body{
+            margin: 0;
+        }
+        h3 {
+            text-align: center;
+            font-weight: normal;
+            color: #131719;
+            font-size: 18px;
+        }
+
+        ul#ul {
+            padding-left: 15px;
+            color: #131719;
+        }
+
+        ul,
+        ol {
+            list-style: none;
+            font-size: 14px;
+        }
+
+        ol {
+            padding-left: 10px;
+            overflow: hidden;
+        }
+
+        ol>li {
+            line-height: 28px;
+            float: left;
+            width: 50%;
+        }
+
+
+        ol>li input {
+            vertical-align: middle;
+        }
+
+        input[type=text] {
+            line-height: 24px;
+            width: 100%;
+            border-radius: 4px;
+            font-size: 14px;
+            border :1px solid #BBC0CB;
+        }
+        textarea{
+            border-radius: 4px;
+            border: 1px solid #BBC0CB;
+            padding: 0;
+        }
+        ul>li {
+            padding-bottom: 10px;
+            margin-right: 15px;
+            /* border-bottom: 1px solid #eee; */
+        }
+
+        ul>li textarea {
+            line-height: 24px;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        ul li p {
+            font-size: 16px;
+            margin: 12px 0;
+        }
+        ul li p b{
+            font-weight: normal;
+            font-size: 14px;
+        }
+
+        #button {
+            width: 90%;
+            background-color: #1CA1F4;
+            color: #fff;
+            line-height: 50px;
+            border-radius: 25px;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        #button:active {
+            transform: translate(2px, 2px);
+            background-color: rgb(38, 77, 90);
+        }
+
+
+        input[type=radio]+label::before {
+            content: "\a0";
+            /*不换行空格*/
+            display: inline-block;
+            vertical-align: 2px;
+            width: 11px;
+            height: 11px;
+            margin-right: 5px;
+            border-radius: 50%;
+            background-color: #fff;
+            border: 1px solid #BBC0CB;
+            text-indent: 2px;
+            line-height: .65;
+            /*行高不加单位，子元素将继承数字乘以自身字体尺寸而非父元素行高*/
+            padding: 3px;
+            vertical-align: middle;
+            margin-top: -1px;
+        }
+
+        input[type="radio"]:checked+label::before {
+            background-color: #1CA1F4;
+            /* 选中的背景颜色 */
+            padding: 3px;
+            background-clip: content-box;
+        }
+
+        input[type='radio'] {
+            /* 隐藏掉原先实际的 radio 框，之所以没用 display:none; 这种简单直接的方式，
+        是因为这种方法会把它从键盘 tab 键切换焦点的队列中完全删除 */
+            position: absolute;
+            clip: rect(0, 0, 0, 0);
+            /* 第一种隐藏方式：剪切为0 */
+            /* visibility: hidden; */
+            /* 第二种隐藏方式：隐藏 */
+        }
+        input[type=checkbox]+label::before {
+            content: "\a0";
+            /*不换行空格*/
+            display: inline-block;
+            vertical-align: 2px;
+            width: 11px;
+            height: 11px;
+            margin-right: 5px;
+            border-radius: 50%;
+            background-color: #fff;
+            border: 1px solid #BBC0CB;
+            text-indent: 2px;
+            line-height: .65;
+            /*行高不加单位，子元素将继承数字乘以自身字体尺寸而非父元素行高*/
+            padding: 3px;
+            vertical-align: middle;
+            margin-top: -1px;
+        }
+
+        input[type="checkbox"]:checked+label::before {
+            background-color: #1CA1F4;
+            /* 选中的背景颜色 */
+            padding: 3px;
+            background-clip: content-box;
+        }
+
+        input[type='checkbox'] {
+            /* 隐藏掉原先实际的 radio 框，之所以没用 display:none; 这种简单直接的方式，
+        是因为这种方法会把它从键盘 tab 键切换焦点的队列中完全删除 */
+            position: absolute;
+            clip: rect(0, 0, 0, 0);
+            /* 第一种隐藏方式：剪切为0 */
+            /* visibility: hidden; */
+            /* 第二种隐藏方式：隐藏 */
+        }
+    </style>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vConsole/3.2.2/vconsole.min.js"></script>
+    <script src="https://pv.sohu.com/cityjson?ie=utf-8"></script>
+</head>
+<h3 id="h3"></h3>
+<ul id="ul">
+    <!-- <li>
+        <p>1,您最喜欢水果？</p>
+        <ol>
+            <li><label><input type="radio" name="question1" id="">yurg dsfsdf</label></li>
+            <li><label><input type="radio" name="question1" id="">yurg dsfsdf</label></li>
+        </ol>
+    </li>
+    <li>
+        <p>2,您最喜欢水果？</p>
+            <ol>
+                <li><label><input type="checkbox" name="question2" id="">yurg dsfsdf</label></li>
+                <li><label><input type="checkbox" name="question2" id="">yurg dsfsdf</label></li>
+            </ol>
+    </li>
+    <li>
+        <p>3,您最喜欢水果？</p>
+        <input type="text" name="question3" id="">
+    </li>
+    <li>
+            <p>4,您最喜欢水果？</p>
+            <textarea rows="3" name="question4"></textarea>
+    </li> -->
+</ul>
+<div id="button">提交</div>
+
+<body>
+    <script>
+        var returnCitySN, flag = true;;
+
+        function alert_(message) {
+            var span = document.createElement('span');
+            span.style.padding = '2px 10px';
+            span.style.borderRadius = '6px';
+            span.style.backgroundColor = 'rgba(0,0,0,.6)';
+            span.style.color = '#fff'
+            span.innerHTML = message;
+            var div = document.createElement('div');
+            div.style.position = 'fixed';
+            div.style.top = '0';
+            div.style.zIndex = 21;
+            div.style.width = '100%';
+            div.style.backgroundColor = 'rgba(0,0,0,.3)';
+            div.style.height = '100%';
+            div.style.textAlign = 'center';
+            div.style.display = 'block';
+            var div1 = document.createElement('div');
+            div1.style.position = 'absolute';
+            div1.style.top = '45%';
+            div1.style.width = '100%';
+            div1.appendChild(span)
+            div.appendChild(div1);
+            window.document.body.appendChild(div);
+            setTimeout(function () {
+                div.style.display = 'none';
+            }, 2000)
+        }
+        //获取search
+        function GetQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return (r[2]);
+            return null;
+        }
+
+        function ajax(opt) {
+            opt = opt || {};
+            opt.method = opt.method.toUpperCase() || 'POST';
+            opt.url = opt.url || '';
+            opt.async = opt.async || true;
+            opt.data = opt.data || null;
+            opt.success = opt.success || function () {};
+            var xmlHttp = null;
+            if (XMLHttpRequest) {
+                xmlHttp = new XMLHttpRequest();
+            } else {
+                xmlHttp = new ActiveXObject('Microsoft.XMLHTTP');
+            }
+            var params = [];
+            for (var key in opt.data) {
+                params.push(key + '=' + opt.data[key]);
+            }
+            var postData = params.join('&');
+            if (opt.method.toUpperCase() === 'POST') {
+                xmlHttp.open(opt.method, opt.url, opt.async);
+                xmlHttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8');
+                xmlHttp.send(postData);
+            } else if (opt.method.toUpperCase() === 'GET') {
+                xmlHttp.open(opt.method, opt.url + '?' + postData, opt.async);
+                xmlHttp.send(null);
+            }
+            xmlHttp.onreadystatechange = function () {
+                if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                    opt.success(xmlHttp.responseText);
+                }
+            };
+        }
+
+        var url = document.domain,
+            targetUrl;
+        if (url === 'wenjuan-cgj.colourlife.com' || url === "yun.colourlife.com") {
+            targetUrl = 'https://service-czy.colourlife.com';
+        } else if (url === 'wenjuan-cgjtest.colourlife.com') {
+            targetUrl = 'https://service-czytest.colourlife.com';
+            var vConsole = new VConsole();
+        } else {
+            targetUrl = 'https://service-czytest.colourlife.com';
+            var vConsole = new VConsole();
+        }
+        var u = navigator.userAgent;
+        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1;
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        document.querySelector('#h3').innerHTML = decodeURI(GetQueryString('name'));
+        var access_token = GetQueryString('access_token');
+        var id = GetQueryString('id');
+        ajax({
+            url: targetUrl + '/cgj/font/question',
+            method: 'get',
+            data: {
+                access_token: access_token,
+                id: id
+            },
+            success: function (res) {
+                res = JSON.parse(res);
+                console.log(res);
+                if (res.code == 0) {
+                    var str = '',text_must=[];
+                    for (var i = 0; i < res.content.question_list.length; i++) {
+                        if (res.content.question_list[i].type == 1) {
+                            str += '<li class="radio"><p data-question_id=' + res.content.question_list[i]
+                                .id + '>' + (i + 1) + '.[单选]' + res.content.question_list[i]
+                                .question + '？</p><ol>'
+                            for (var k = 0; k < res.content.question_list[i].answer_list.length; k++) {
+                                str += '<li><input type="radio" id=radio'+res.content.question_list[i].id+res.content.question_list[i].answer_list[k].id+' value=' + res.content.question_list[
+                                        i].answer_list[k].id + ' name="question' + (i + 1) + '" id=""><label for="radio'+res.content.question_list[i].id+res.content.question_list[i].answer_list[k].id+'">' +
+                                    res.content.question_list[i].answer_list[k].answer + '</label></li>'
+                            }
+                            str += '</ol></li>'
+                        } else if (res.content.question_list[i].type == 2) {
+                            str += '<li class="checkbox"><p data-question_id=' + res.content.question_list[
+                                    i].id + '>' + (i + 1) + '.[多选]' + res.content.question_list[i]
+                                .question + '？</p><ol>'
+                            for (var k = 0; k < res.content.question_list[i].answer_list.length; k++) {
+                                str += '<li><input type="checkbox"  value=' + res.content
+                                    .question_list[i].answer_list[k].id + ' name="question' + (i + 1) +
+                                    '" id="checkbox'+res.content.question_list[i].id+res.content
+                                    .question_list[i].answer_list[k].id+'"><label for="checkbox'+res.content.question_list[i].id+res.content
+                                    .question_list[i].answer_list[k].id+'">' + res.content.question_list[i].answer_list[k].answer +
+                                    '</label></li>'
+                            }
+                            str += '</ol></li>'
+                        }
+                    }
+                    
+                    for (var i = 0; i < res.content.fill_list.length; i++) {
+                        if(res.content.fill_list[i].must_fill==2){
+                            text_must.push(res.content.fill_list)
+                        }
+                        if (res.content.fill_list[i].type == 3) {
+                            str += '<li class="text"><p  data-question_id=' + res.content.fill_list[i].id +
+                                ' data-must-fill='+res.content.fill_list[i].must_fill+'>' + (i + 1 + res.content.question_list.length) +
+                                '.' + res.content.fill_list[i].question +
+                                '<b>'+ (res.content.fill_list[i].must_fill==2?'(必填)':'')+'</b>？</p><input type="text" name="question' + (i + 1 + res.content
+                                    .question_list.length) + '" id=""></li>'
+                        } else if (res.content.fill_list[i].type == 4) {
+                            str += '<li class="textarea"><p data-must-fill='+res.content.fill_list[i].must_fill+' data-question_id=' + res.content.fill_list[i]
+                                .id + '>' + (i + 1 + res.content.question_list.length) +
+                                '.' + res.content.fill_list[i].question +
+                                '<b>'+ (res.content.fill_list[i].must_fill==2?'(必填)':'')+'</b>？</p><textarea rows="3" name="question' + (i + 1 + res.content
+                                    .question_list.length) + '" id=""></textarea></li>'
+                        }
+                    }
+                    document.querySelector('#ul').innerHTML = str;
+                    document.querySelector('#button').onclick = function () {
+                        var radios = document.querySelectorAll('.radio'),
+                            checkboxs = document.querySelectorAll('.checkbox'),
+                            texts = document.querySelectorAll('.text'),
+                            textareas = document.querySelectorAll('.textarea'),
+                            radio_list = [],
+                            checkbox_list = [],
+                            text_list = [],
+                            textarea_list = [];
+                        for (var i = 0; i < radios.length; i++) {
+                            for (var k = 0; k < radios[i].children[1].children.length; k++) {
+                                if (radios[i].children[1].children[k].children[0].checked ==
+                                    true) {
+                                    answer_id = radios[i].children[1].children[k].children[
+                                        0].value;
+                                    question_id = radios[i].children[0].getAttribute(
+                                        'data-question_id');
+                                    radio_list.push({
+                                        question_id: question_id,
+                                        answer_id: answer_id
+                                    })
+                                }
+                            }
+                        }
+                        for (var i = 0; i < checkboxs.length; i++) {
+                            var list = [];
+                            for (var k = 0; k < checkboxs[i].children[1].children.length; k++) {
+                                if (checkboxs[i].children[1].children[k].children[0]
+                                    .checked) {
+                                    list.push(checkboxs[i].children[1].children[k].children[
+                                        0].value)
+                                }
+
+                            }
+                            question_id = checkboxs[i].children[0].getAttribute('data-question_id');
+                            checkbox_list.push({
+                                question_id: question_id,
+                                answer_id: list.join(',')
+                            })
+                        }
+                        for (var i = 0; i < texts.length; i++) {
+                            if (texts[i].children[1].value) {
+                                question_id = texts[i].children[0].getAttribute('data-question_id');
+                                console.log(texts[i].children[0].getAttribute('data-must-fill'))
+                                //console.log(/^[6]$/.test(texts[i].children[0].innerHTML));
+                                
+                                text_list.push({
+                                    fill_id: question_id,
+                                    answer: texts[i].children[1].value,
+                                    must_fill:texts[i].children[0].getAttribute('data-must-fill')
+                                })
+                            } 
+                        }
+                        for (var i = 0; i < textareas.length; i++) {
+                            console.log(textareas[i].children[0].getAttribute('data-must-fill'))
+                            if (textareas[i].children[1].value) {
+                                question_id = textareas[i].children[0].getAttribute('data-question_id');
+                                
+                                textarea_list.push({
+                                    fill_id: question_id,
+                                    answer: textareas[i].children[1].value,
+                                    must_fill:textareas[i].children[0].getAttribute('data-must-fill')
+                                })
+                            }
+                        }
+                        console.log(radio_list, );
+                        console.log( checkbox_list)
+                        console.log(textarea_list)
+                        console.log( textarea_list)
+                        var textLength =  text_list.length +
+                            textarea_list.length;
+                            var checkboxLength=radio_list.length + checkbox_list.length;
+                            var sub_index=0;
+                        for(var i=0;i<text_list.length;i++){
+                            if(text_list[i].must_fill==2){
+                                sub_index++;
+                            }
+                        }
+                        for(var i=0;i<textarea_list.length;i++){
+                            if(textarea_list[i].must_fill==2){
+                                sub_index++;
+                            }
+                        }
+                        //console.log(sub_index,text_must.length,text_list,textarea_list)
+                        if (checkboxLength != ( res.content.question_list.length)) {
+                            alert_('请填写单选多选答案！')
+                            return;
+                        }else if(sub_index !=text_must.length){
+                            console.log(text_must.length,textLength,sub_index)
+                            alert_('请填写必填答案！')//////////////////////////////////////
+                            return;
+                        } else {
+                            console.log(returnCitySN["cip"] + ',' + returnCitySN["cname"],
+                                returnCitySN);
+                            if (flag) {
+                                flag = false;
+                                ajax({
+                                    url: targetUrl + '/cgj/font/answer',
+                                    method: 'POST',
+                                    data: {
+                                        question: JSON.stringify(radio_list.concat(
+                                            checkbox_list)),
+                                        fill: JSON.stringify(text_list.concat(textarea_list)),
+                                        access_token: access_token,
+                                        id: GetQueryString('id'),
+                                        ip: returnCitySN["cip"],
+                                        from_type: isAndroid ? 2 : isiOS ? 1 : 0,
+                                        version: '1',
+                                        phone: ''
+                                    },
+                                    success: function (data) {
+                                        flag = true;
+                                        data = JSON.parse(data);
+                                        if (data.code == 0) {
+                                            alert_('感谢您的问卷！');
+                                            setTimeout(function () {
+                                                window.location.href ='./success.html';
+                                            }, 2000)
+                                        } else {
+                                            alert_(data.message)
+                                        }
+                                    }
+                                })
+                            }
+
+                        }
+                    }
+                } else {
+                    alert_(res.message)
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

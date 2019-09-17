@@ -1,0 +1,32 @@
+/* satisfaction_analyze */
+.satisfaction_list .top ul li,.analyze .top ul li {
+    float: left;
+    margin-bottom: 10px;
+}
+.satisfaction_list .top ul {
+    overflow: hidden;
+}
+.satisfaction_list div.top ul li {
+    line-height: 50px;
+    margin-bottom: 0;
+}
+.satisfaction_list .top ul li,.analyze .top ul{
+    overflow: hidden;
+}
+.satisfaction_list .top ul li,.analyze .top ul li {
+    margin-right: 10px;
+    line-height: 32px;
+}
+.satisfaction_list .top ul li>span,.analyze .top ul li>span{
+    margin-right: 5px;
+}
+.analyze .ant-table-pagination.ant-pagination{
+    display: none;
+}
+.analyze .con ul li p{
+    font:  normal 400 18px/38px 'Microsoft Yahei';
+    margin:20px 0px;
+    margin-bottom: 20px !important;
+}
+
+

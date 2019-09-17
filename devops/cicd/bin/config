@@ -1,0 +1,34 @@
+#以下为配置修改
+##用于镜像名称
+project_name="colourlife_cgjwenjuan_services"
+#提供主要容器名(基于dockerfile镜像启动的容器）即.yaml文件中容器名
+primary_container_name="colourlife_cgjwenjuan_services"
+#提供项目中所有启动容器列表
+container_names="colourlife_cgjwenjuan_services"
+#docker仓库
+docker_registry="docker.ops.colourlife.com:5000"
+#auth是否docker仓库有设置密码，yes有，no无
+auth=yes
+#user是docker仓库用户名
+user=admin
+#pass是docker仓库密码
+pass=admin@123!
+#预正式serverpre部署的服务器别名
+serverpre=e
+#测试serverdev部署的服务器别名
+serverdev=TXDockerTest2
+##JenkinsCIJob名称
+#jenkinsDev=kl_dev_group_service_cd
+#jenkinsProd=kl_prod_group_service_cd
+#jenkinsPro=kl_pro_group_service_cd
+##应用名称（用于openshift dc模板）
+#app_names="kl-group-service-prod"
+##应用服务（用于openshift dc模板）
+#app_service="kl-group-service"
+##openshift模板使用域名
+#hostname_prod=null
+#hostname_pro=null
+##Openshift的Project
+#Openshift_project="kl-t1-service"
+##git地址
+#gitaddress=ssh://git@code.listcloud.cn:10022/moses/colourlife_group_service.git

@@ -1,9 +1,7 @@
 .appraise-wrapper{
     height: 100%;
 }
-.appraise-wrapper .ant-layout{
-    padding-top: 16px;
-}
+
 .appraise-wrapper .ant-layout-sider{
 background-color: #fff;
 }

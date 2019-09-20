@@ -35,7 +35,7 @@ class Home extends Component {
         pathname: '/Login'
       });
     }
-    console.log(token)
+    // console.log(token)
     var params = {
       access_token: token,
     };

@@ -34,12 +34,14 @@
 }
 ._menu {
     height: 100%;
-    width: 178px;
+    /* width: 178px; */
+       width: 223px;
     background-color: rgba(51, 56, 67, 1);
     transition: all 0.2s;
   }
 ._menu_title {
-    width: 178px;
+    /* width: 178px; */
+    width: 223px;
 	height: 30px;
     background-color: rgba(75, 81, 99, 1);
     text-align: center;

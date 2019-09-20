@@ -1,0 +1,61 @@
+.kuQuestionnaire{
+    background-color: #fff;
+   
+}
+.bread-title{
+    height: 64px;
+    
+    line-height: 64px;
+    
+   background-color: #f0f2f5;
+  
+   
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: end;
+    align-items: flex-end;
+    border-bottom: 1px solid #CCC;
+}
+.bread-title span{
+    color:#595959;
+}
+.bread-title-wrapper{
+width: 100%;
+height: 100%;
+background-color: #fff;
+}
+.bread-title-wrapper .ant-breadcrumb{
+
+height: 100%;
+line-height: 79px;
+
+}
+.bread-content{
+    background-color: #fff;
+    height: 100%;
+    padding: 40px 30px;
+}
+h1{
+    font-size: 38px;
+}
+.bread-content-content{
+    border: 1px solid #ccc;
+    padding: 20px;
+    /* height: 80px; */
+    border-radius:10px; 
+}
+.bread-content-content .child1{
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: space-between;
+    height: 40px;
+    line-height: 40px;
+    
+}
+.bread-content-content .child2{
+   
+    display: flex;
+    justify-content: space-between;
+    height: 50px;
+    line-height: 50px;
+}

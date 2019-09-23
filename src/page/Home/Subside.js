@@ -13,7 +13,7 @@ class Subside extends Component {
     }
   }
 
-  componentWillMount(){
+  UNSAFE_componentWillMount(){
        var _this=this;
        this.setState({selectedKeys:_this.props.current,openKeys:_this.props.openCurrent});
   }

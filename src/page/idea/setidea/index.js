@@ -4,7 +4,7 @@ import {Breadcrumb} from 'antd'
 class Now extends Component {
   render() {
     return (
-      <div className='lookidea'>
+      <div className='setidea'>
          <div className="bread-title">
           <div className="bread-title-wrapper">
             <Breadcrumb separator="-">
@@ -12,12 +12,12 @@ class Now extends Component {
                 意见反馈
               </Breadcrumb.Item>
 
-              <Breadcrumb.Item>查看意见</Breadcrumb.Item>
+              <Breadcrumb.Item>设置类型</Breadcrumb.Item>
             </Breadcrumb>
           </div>
         </div>
-        <div className='lookidea-content'>
-          查看意见
+        <div className='setidea-content'>
+          设置类型
         </div>
       </div>
     )

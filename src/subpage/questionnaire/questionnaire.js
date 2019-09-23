@@ -76,12 +76,6 @@ export default class questionnaire extends React.Component {
                     title: '问卷详细',
                     content: (
                       <div className='detail_alert'>
-                            {/* <p><span>id：</span>{res.content.id}</p>
-                            <p><span>ip：</span>{res.content.mobile}</p>
-                            <p><span>问卷来源：</span>{res.content.source}</p>
-                            <p><span>手机号：</span>{res.content.mobile}</p>
-                            <p><span>问卷人：</span>{res.content.name}</p>
-                            <p><span>提交时间：</span>{res.content.mobile}</p> */}
                             {res.content.question_list.length?(<ul>
                                 {res.content.question_list.map((v,i)=>{
                                     if(v.type===1){
@@ -177,7 +171,7 @@ export default class questionnaire extends React.Component {
                         window.open(`${api.targetUrl}/backend/questionlist/export?form_type=${this.state.form_type||''}&state=${this.state.state||''}&access_token=${this.state.access_token}&question_id=${this.state.wenjuan_name}&time_start=${Date.parse(this.state.wenjuan_time[0])||0}&time_end=${Date.parse(this.state.wenjuan_time[1])||0}`)
                     }}>导出</Button> */}
                     </li>
-                <p style={{textAlign:'right'}}><Button onClick={()=>{history.push({pathname:'/new_module'})}}>新建模板</Button></p>
+                <p style={{textAlign:'right'}}><Button type='primary' onClick={()=>{history.push({pathname:'/new_module'})}}>新建问卷</Button></p>
                 </ul>
                 
                 </div>

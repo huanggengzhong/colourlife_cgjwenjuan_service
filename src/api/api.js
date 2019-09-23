@@ -1,28 +1,82 @@
 import axios from "axios"
 import qs from "qs"
-
+import {message} from 'antd'
 var url = document.domain, _baseUrl, openUrl;
-//wenjuan-cgj.colourlife.com
-if (url === "yun.colourlife.com" ||url==='wenjuan-cgj.colourlife.com') { //正式环境
-    _baseUrl = "https://yun.colourlife.com"
-    openUrl = "https://open.colourlife.com"
 
-} else if (url === "yun-beta.colourlife.com" ) { //预发环境
-    _baseUrl = "https://yun-beta.colourlife.com"
-    openUrl = "http://open.test.colourlife.com"
+// if (url === "yun.colourlife.com" ||url==='lekaiadmin-door.colourlife.com') { //正式环境
+//     _baseUrl = "https://yun.colourlife.com"
+//     openUrl = "https://open.colourlife.com"
+
+// } else if (url === "yun-beta.colourlife.com"||url.indexOf('beta')!==-1 ) { //预发环境
+//     _baseUrl = "https://yun-beta.colourlife.com"
+//     openUrl = "http://open.test.colourlife.com"
     
 
-} else { //测试环境
-    // baseUrl="https://openapi-test.colourlife.com"
-    // _baseUrl = "http://localhost"
-    // openUrl = "http://localhost"
-    _baseUrl = "https://yun-test.colourlife.com"
-    openUrl = "http://open.test.colourlife.com"
-}
+// } else { //测试环境
+//     // baseUrl="https://openapi-test.colourlife.com"
+//     _baseUrl = "https://yun-test.colourlife.com"
+//     openUrl = "http://open.test.colourlife.com"
+// }
 
+if(!url||url.indexOf('test')!==-1||url==='localhost'){
+    _baseUrl = "https://yun-test.colourlife.com"
+    openUrl = "https://open.test.colourlife.com"
+}else if (url === "yun-beta.colourlife.com"||url.indexOf('beta')!==-1 ) { //预发环境
+    _baseUrl = "https://yun-beta.colourlife.com"
+    openUrl = "http://open.beta.colourlife.com"
+}else {
+    _baseUrl = "https://yun.colourlife.com"
+    openUrl = "https://open.colourlife.com"
+}
+//响应拦截
+axios.interceptors.response.use(function (response) { 
+
+    if(response.data.code === 400 ){
+
+        window.location.href = _baseUrl+'/#/login';
+
+        localStorage.clear();
+        message.error(response.data.message);
+
+    }
+
+	if(response.data.code !== 0 && response.data.message){
+
+		message.error(response.data.message);
+
+	}
+
+    return response; 
+
+}, function (error) {  
+
+    // Do something with response error  
+    return Promise.reject(error)  
+
+})
 export default {
     _baseUrl: _baseUrl,
     openUrl: openUrl,
+    getnavHeader:params => {
+        return axios.get(`${_baseUrl}/common_module/header/header.html`, {
+            params: params
+        }).then(res => res.data)
+    },
+    getnavsider:params => {
+        return axios.get(`${_baseUrl}/common_module/slider/slider.html`, {
+            params: params
+        }).then(res => res.data)
+    },
+    // getnavHeader:params => {
+    //     return axios.get(`${backyard_url}/nav/head`, {
+    //         params: params
+    //     }).then(res => res.data)
+    // },
+    // getnavsider:params => {
+    //     return axios.get(`${backyard_url}/nav/menu`, {
+    //         params: params
+    //     }).then(res => res.data)
+    // },
     //1.获取用户扫码登录的二维码基础信息
     getQrcodeInfo: params => {
         return axios.get(`${_baseUrl}/api/login/qrcode`, {

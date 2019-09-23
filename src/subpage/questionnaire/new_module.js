@@ -312,7 +312,7 @@ export default class new_module extends React.Component{
                     </div>) 
             }
         }
-        return (<div className='new_module'>
+        return (<div className='new_module' style={{marginTop:20}}>
         <Spin size="large" spinning={this.state.loading} tip='提交中'>
         <Button onClick={()=>{window.history.go(-1)}}>返回</Button>
         <ul className='ul'>

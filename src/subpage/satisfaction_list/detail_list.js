@@ -113,7 +113,7 @@ export default class detail_list extends React.Component {
     }
     render(){
         const {Column} =Table;
-        return (<div>
+        return (<div style={{marginTop:20}}>
             <div><Button onClick={()=>{window.history.go(-1)}}>返回</Button></div>
             <p style={{marginTop:10}}>标题：{this.state.title}</p>
             <p style={{marginTop:10}}>问题：{this.state.question_title}</p>

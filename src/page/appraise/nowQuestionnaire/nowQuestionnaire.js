@@ -47,7 +47,6 @@ class Now extends Component {
           <div className="bread-title-wrapper">
             <Breadcrumb separator="-">
               <Breadcrumb.Item className="bread-pingjia" style={{marginLeft:10}}>
-                {/* <Icon type="left-square" onClick={this.handleBack} /> */}
                 评价问卷
               </Breadcrumb.Item>
 

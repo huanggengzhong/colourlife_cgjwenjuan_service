@@ -1,11 +1,7 @@
 import React, { Component } from 'react'
 import './DataSurvey.css'
 import { Tabs ,Breadcrumb} from 'antd'
-
 import Analyze from './../datagaikuang/analyze'
-
-
-
 const { TabPane } = Tabs
 
 class DataSurvey extends Component {

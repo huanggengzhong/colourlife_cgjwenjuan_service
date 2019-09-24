@@ -12,7 +12,8 @@ class Now extends Component {
   onChange = () => {
     console.log('我被选了')
   }
-  onChangeData = () => {
+  onChangeData = (e) => {
+    console.log(`checked = ${e.target.checked}`);
     this.props.history.push('appraise/DataSurvey')
   }
   onChangeTihuan = () => {
@@ -68,12 +69,12 @@ class Now extends Component {
             </div>
             <div className="child2">
               <div className="left">
-                <Checkbox onChange={this.onChange}>编辑问卷</Checkbox>
-                <Checkbox onChange={this.onChangeData}>查看数据</Checkbox>
+                <Checkbox onChange={this.onChange} checked={false}>编辑问卷</Checkbox>
+                <Checkbox onChange={this.onChangeData} checked={false}>查看数据</Checkbox>
               </div>
               <div className="right">
-                <Checkbox onChange={this.onChangeTihuan}>替换问卷</Checkbox>
-                <Checkbox onChange={this.onChangeCopy}>复制</Checkbox>
+                <Checkbox onChange={this.onChangeTihuan} checked={false}>替换问卷</Checkbox>
+                <Checkbox onChange={this.onChangeCopy} checked={false}>复制</Checkbox>
               </div>
             </div>
           </div>
@@ -104,7 +105,7 @@ class Now extends Component {
             <Row>
               <Checkbox value="E">小区评价当前问卷</Checkbox>
             </Row>
-            <p class="nowquestionnaire-set">
+            <p className="nowquestionnaire-set">
               <Button type="primary" onClick={this.handleSetwenjuqn}>
                 设为小区评价当前问卷
               </Button>

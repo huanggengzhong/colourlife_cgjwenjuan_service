@@ -1,0 +1,4 @@
+路由添加 src/router
+需要修改的文件：
+添加api 
+src/subpage/subspi.js

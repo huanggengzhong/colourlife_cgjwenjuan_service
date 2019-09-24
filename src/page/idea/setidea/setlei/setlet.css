@@ -1,0 +1,13 @@
+.setlei-content th{
+    text-align: center!important;
+}
+.setlei-content .ant-table-tbody {
+    text-align: center!important;
+}
+.setidea-modal .ant-modal-title{
+    font-weight: 600!important;
+}
+.leixingname{
+    height:32px!important;
+    line-height:32px!important;
+}

@@ -247,7 +247,7 @@ onClickYiJian(_key) {
               {
                 key: 1,
                 name: '查看意见',
-                icon_src: 'diff',
+                icon_src: 'aliwangwang',
                 children: []
               },
               {

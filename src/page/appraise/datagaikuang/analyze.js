@@ -1,9 +1,8 @@
+
 import React from 'react'
 import {Select,Button,Table,Progress,notification} from 'antd'
-// import history from './../../router/history'
 import history from './../../../router/history'
 import './satisfaction_analyze.css'
-// import api from './../subapi'
 import api from './../../../subpage/subapi'
 
 const {Column} =Table;

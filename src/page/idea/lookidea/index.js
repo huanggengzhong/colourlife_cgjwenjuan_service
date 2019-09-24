@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import {Breadcrumb} from 'antd'
+import Lookdetail from './lookdetail/lookdetail';
+import './index.css'
 
 class Now extends Component {
+ 
   render() {
     return (
       <div className='lookidea'>
@@ -17,8 +20,9 @@ class Now extends Component {
           </div>
         </div>
         <div className='lookidea-content'>
-          查看意见
+         <Lookdetail/>
         </div>
+      
       </div>
     )
   }

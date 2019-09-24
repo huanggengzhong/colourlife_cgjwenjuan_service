@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {Breadcrumb} from 'antd'
+import Setlei from './setlei/setlei'
 
 class Now extends Component {
   render() {
@@ -17,7 +18,7 @@ class Now extends Component {
           </div>
         </div>
         <div className='setidea-content'>
-          设置类型
+          <Setlei/>
         </div>
       </div>
     )

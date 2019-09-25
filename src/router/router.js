@@ -14,6 +14,7 @@ import new_module from './../subpage/questionnaire/new_module'
 import NowQuestionnaire from '../page/appraise/nowQuestionnaire/nowQuestionnaire'
 import KuQuestionnaire from '../page/appraise/kuQuestionnaire/kuQuestionnaire'
 import DataSurvey from '../page/appraise/DataSurvey/DataSurvey'
+import Lookdetail from './../page/idea/lookidea/detailidea/detailidea'
 
 class Router extends Component {
   constructor(props) {
@@ -42,7 +43,9 @@ class Router extends Component {
         <Route exact path="/appraise/DataSurvey" component={DataSurvey} />
         {/* 意见路由 */}
         <Route exact path="/lookidea" component={Lookidea} />
+        <Route exact path="/lookidea/detail" component={Lookdetail} />
         <Route exact path="/setidea" component={Setidea} />
+
         {/* 设置默认打开页 */}
         {
           HASH==='/nowQuestionnaire'?<Route exact path="/" component={NowQuestionnaire} />:<Route exact path="/" component={Lookidea} />

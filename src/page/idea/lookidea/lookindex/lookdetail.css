@@ -1,0 +1,8 @@
+.lookdetail{
+    position: relative;
+}
+.lookdetail .lookdetail-daochu{
+    position: absolute;
+    top: 7px;
+    right: 7px;
+}

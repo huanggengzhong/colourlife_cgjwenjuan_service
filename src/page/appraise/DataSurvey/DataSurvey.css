@@ -1,3 +1,6 @@
 .DataSurvey-a {
     color: #40a9ff!important;
 }
+.data-survey .bread-title{
+    border-bottom:none; 
+}

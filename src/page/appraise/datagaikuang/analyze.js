@@ -2,7 +2,7 @@
 import React from 'react'
 import {Select,Button,Table,Progress,notification} from 'antd'
 import history from './../../../router/history'
-import './satisfaction_analyze.css'
+import './analyze.css'
 import api from './../../../subpage/subapi'
 
 const {Column} =Table;

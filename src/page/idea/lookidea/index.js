@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {Breadcrumb} from 'antd'
-import Lookdetail from './lookdetail/lookdetail';
+import Lookdetail from './lookindex/lookdetail';
 import './index.css'
 
 class Now extends Component {

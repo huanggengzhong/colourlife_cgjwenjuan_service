@@ -13,7 +13,8 @@ class Home extends Component {
       user: '', //用户信息
       usermenuList: [], //菜单列表数据
       loading: false,
-      access_token: ''
+      access_token: '',
+      current_key:'1'
     }
   }
 
@@ -172,9 +173,14 @@ class Home extends Component {
     if (_key === "1") {
         
         
+        
         this.props.history.push(`/nowQuestionnaire?access_token=${sessionStorage.getItem('access_token')}` )
     }else if(_key === "2") {
         this.props.history.push(`/kuQuestionnaire?access_token=${sessionStorage.getItem('access_token')}`)
+    
+        this.setState({
+          current_key:window.localStorage.getItem('current_key')
+        })
     }
     
 }
@@ -183,8 +189,12 @@ onClickYiJian(_key) {
       this.props.history.push(`/lookidea?access_token=${sessionStorage.getItem('access_token')}` )
     }else if(_key === "2") {
         this.props.history.push(`/setidea?access_token=${sessionStorage.getItem('access_token')}`)
+        
+        
     }
-    
+}
+componentDidMount(){
+  
 }
   render() {
     const HASH=window.location.pathname;
@@ -224,6 +234,7 @@ onClickYiJian(_key) {
             title="评价问卷"
             onClickItem={this.onClick.bind(this)}
             current={['1']}
+            // current={['2']}
             menuData={[
               {
                 key: 1,

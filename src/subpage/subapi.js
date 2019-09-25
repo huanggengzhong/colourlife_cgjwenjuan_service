@@ -9,6 +9,19 @@ var url = document.domain,
     } else {
         targetUrl = 'https://service-czytest.colourlife.com'
     }
+    
+    // 2019年9月24日15:16:09增加的
+    var baseUrl;
+if (url == "service-czy.colourlife.com") {
+    baseUrl = "https://service-czy.colourlife.com/"
+   
+} 
+else {
+    baseUrl = "https://service-czytest.colourlife.com/"
+   
+}
+    // 2019年9月24日15:16:09增加的
+
 // let AUTH_TOKEN = (function () {
 //     return sessionStorage.getItem("access_token");
 // })();
@@ -72,5 +85,8 @@ export default {
         minute = minute < 10 ? ('0' + minute) : minute;
         second = second < 10 ? ('0' + second) : second;
         return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
-    }
+    },
+    // 2019年9月24日15:13:30增加的接口
+    get: (params, url) => { return instance.get(`${baseUrl}/${url}`, { params: params }).then(res => res.data) },
+     // 2019年9月24日15:13:30增加的接口
 }

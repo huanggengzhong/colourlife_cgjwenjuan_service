@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import './DataSurvey.css'
-import { Tabs ,Breadcrumb} from 'antd'
+import { Tabs ,Breadcrumb,Icon} from 'antd'
 import Analyze from './../datagaikuang/analyze'
+import Datawenjuan from './../data-wenjuan/datawenjuan'
+import './DataSurvey.css'
 const { TabPane } = Tabs
 
 class DataSurvey extends Component {
@@ -11,7 +13,7 @@ class DataSurvey extends Component {
   }
   render() {
     return (
-      <div>
+      <div className='data-survey'>
         <div className="bread-title">
           <div className="bread-title-wrapper">
             <Breadcrumb separator="-">
@@ -19,6 +21,10 @@ class DataSurvey extends Component {
                 className="bread-pingjia"
                 style={{ marginLeft: 10 }}
               >
+                <Icon type="left" style={{ marginLeft: 10, marginRight: 10 }} onClick={()=>{
+                  console.log(11);
+                  this.props.history.goBack(-1);
+                }}/>
                 评价问卷
               </Breadcrumb.Item>
               <Breadcrumb.Item>当前问卷</Breadcrumb.Item>
@@ -33,7 +39,8 @@ class DataSurvey extends Component {
             
           </TabPane>
           <TabPane tab="问卷数据" key="2">
-            问卷数据
+            {/* 问卷数据 */}
+            <Datawenjuan/>
           </TabPane>
         </Tabs>
       </div>

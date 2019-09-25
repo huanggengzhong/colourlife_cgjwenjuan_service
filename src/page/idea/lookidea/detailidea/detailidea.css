@@ -1,0 +1,28 @@
+.yijianxiangqing-title{
+    height: 64px;
+    
+    line-height: 64px;
+    
+   background-color: #f0f2f5;
+  
+   
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: end;
+    align-items: flex-end;
+    border-bottom: 1px solid #CCC;
+}
+.yijianxiangqing-title span{
+    color:#595959;
+}
+.yijianxiangqing-title-wrapper{
+width: 100%;
+height: 100%;
+background-color: #fff;
+}
+.yijianxiangqing-title-wrapper .ant-breadcrumb{
+
+height: 100%;
+line-height: 79px;
+
+}

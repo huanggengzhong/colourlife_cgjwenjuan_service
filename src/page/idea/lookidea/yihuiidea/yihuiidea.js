@@ -34,7 +34,7 @@ import {
   Radio
 } from 'antd'
 import apis from './../../../../subpage/subapi'
-import './allidea.css'
+import './yihuiidea.css'
 
 const menu = (
     <Menu >
@@ -425,8 +425,8 @@ export default class Show extends Component {
         key: 'user_state',
         width: 100,
         render: text => 
-        // <Tag color="#87d068">已回复</Tag>
-        <Tag color="#f50">未回复</Tag>
+        <Tag color="#87d068">已回复</Tag>
+       
     
       },
       {

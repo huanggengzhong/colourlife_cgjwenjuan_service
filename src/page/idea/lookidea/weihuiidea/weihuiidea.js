@@ -34,7 +34,7 @@ import {
   Radio
 } from 'antd'
 import apis from './../../../../subpage/subapi'
-import './allidea.css'
+import './weihuiidea.css'
 
 const menu = (
     <Menu >
@@ -78,14 +78,6 @@ export default class Show extends Component {
       phone: null,
       nickname: null,
       questionList: [
-        // { question: "界面风格满意度？", id: 1, "answer": 2 },
-        // { question: "操作简便满意度？", id: 2, "answer": 2 },
-        // { question: "稳定性满意度？", id: 3, "answer": 3 },
-        // { question: "帮助与反馈满意度（提供的帮助与反馈的及时性）？", id: 4, "answer": 2 },
-        // { question: "界面风格满意度？", id: 1, "answer": 2 },
-        // { question: "操作简便满意度？", id: 2, "answer": 2 },
-        // { question: "稳定性满意度？", id: 3, "answer": 3 },
-        // { question: "帮助与反馈满意度（提供的帮助与反馈的及时性）？", id: 4, "answer": 2 },
       ],
       answerList: [
         { name: '非常满意', id: 1 },

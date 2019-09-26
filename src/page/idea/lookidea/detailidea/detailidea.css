@@ -26,3 +26,44 @@ height: 100%;
 line-height: 79px;
 
 }
+.yijianxiangqing .image-wrapper{
+   
+display: flex;
+}
+.yijianxiangqing img{
+    width: 120px;
+    height:  120px;
+    display: block;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+.yijianxiangqing .huifu-fankui{
+ display: flex;
+ margin-top: 30px;
+ position: relative;
+ margin-bottom: 60px;
+}
+.yijianxiangqing .huifu-fankui .zuijia{
+    position: absolute;
+    
+    right: 43px;
+    bottom: -41px;
+    width: 80px;
+}
+.yijianxiangqing .huifu-fankui .child1{
+    width: 90px;
+   }
+.yijianxiangqing .huifu-fankui .child2{
+   
+    flex:1;
+   }
+   .yijianxiangqing .huifu-recored .child1{
+    display: flex;
+    /* align-items: center; */
+   }
+   .yijianxiangqing .huifu-recored .huifu-title{
+    width: 85px;
+    font-size: 21px;
+    font-weight: 600;
+    border-bottom: 2px solid #000;
+   }

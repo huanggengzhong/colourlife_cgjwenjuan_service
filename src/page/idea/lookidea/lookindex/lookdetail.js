@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import {Tabs,Row,Col,Button} from 'antd'
 import Allidea from '../allidea/allidea'
+import Yihuiidea from '../yihuiidea/yihuiidea'
+import Weihuiidea from './../weihuiidea/weihuiidea'
 
 import './lookdetail.css'
 const {TabPane} = Tabs
@@ -22,10 +24,12 @@ class Lookdetail extends Component {
         <Tabs defaultActiveKey="3" type="line">
       
           <TabPane tab="未回复意见" key="1" >
-          未回复意见
+          {/* 未回复意见 */}
+          <Weihuiidea/>
           </TabPane>
           <TabPane tab="已回复意见" key="2">
-          已回复意见
+          {/* 已回复意见 */}
+          <Yihuiidea></Yihuiidea>
           </TabPane>
           <TabPane tab="全部意见" key="3">
           {/* 全部意见 */}

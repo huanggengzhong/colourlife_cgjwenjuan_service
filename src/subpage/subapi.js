@@ -8,6 +8,7 @@ var url = document.domain,
         targetUrl = 'https://service-czytest.colourlife.com'
     } else {
         targetUrl = 'https://service-czytest.colourlife.com'
+        // targetUrl = 'https://yjfk-backend-czytest.colourlife.com'
     }
     
     // 2019年9月24日15:16:09增加的
@@ -18,6 +19,7 @@ if (url == "service-czy.colourlife.com") {
 } 
 else {
     baseUrl = "https://service-czytest.colourlife.com/"
+    // baseUrl = "https://yjfk-backend-czytest.colourlife.com"
    
 }
     // 2019年9月24日15:16:09增加的

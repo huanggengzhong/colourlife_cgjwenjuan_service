@@ -41,6 +41,9 @@ class Now extends Component {
 
     // this.props.history.push(-1)
   }
+  onChangeEdit=()=>{
+    this.props.history.push('/edit_module') 
+  }
   render() {
     return (
       <div className="nowquestionnaire">
@@ -69,7 +72,7 @@ class Now extends Component {
             </div>
             <div className="child2">
               <div className="left">
-                <Checkbox onChange={this.onChange} checked={false}>编辑问卷</Checkbox>
+                <Checkbox onChange={this.onChangeEdit} checked={false}>编辑问卷</Checkbox>
                 <Checkbox onChange={this.onChangeData} checked={false}>查看数据</Checkbox>
               </div>
               <div className="right">

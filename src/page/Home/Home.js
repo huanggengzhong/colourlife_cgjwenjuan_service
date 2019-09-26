@@ -174,9 +174,11 @@ class Home extends Component {
         
         
         
-        this.props.history.push(`/nowQuestionnaire?access_token=${sessionStorage.getItem('access_token')}` )
+        this.props.history.push(`/nowQuestionnaire?` )
+        // this.props.history.push(`/nowQuestionnaire?access_token=${sessionStorage.getItem('access_token')}` )
     }else if(_key === "2") {
-        this.props.history.push(`/kuQuestionnaire?access_token=${sessionStorage.getItem('access_token')}`)
+        this.props.history.push(`/kuQuestionnaire`)
+        // this.props.history.push(`/kuQuestionnaire?access_token=${sessionStorage.getItem('access_token')}`)
     
         this.setState({
           current_key:window.localStorage.getItem('current_key')
@@ -186,9 +188,11 @@ class Home extends Component {
 }
 onClickYiJian(_key) {
     if (_key === "1") {
-      this.props.history.push(`/lookidea?access_token=${sessionStorage.getItem('access_token')}` )
+      this.props.history.push(`/lookidea?` )
+      // this.props.history.push(`/lookidea?access_token=${sessionStorage.getItem('access_token')}` )
     }else if(_key === "2") {
-        this.props.history.push(`/setidea?access_token=${sessionStorage.getItem('access_token')}`)
+        this.props.history.push(`/setidea`)
+        // this.props.history.push(`/setidea?access_token=${sessionStorage.getItem('access_token')}`)
         
         
     }
@@ -230,7 +234,7 @@ componentDidMount(){
             loading={this.state.loading}
           />
           {
-            (HASH==='/nowQuestionnaire')?<Subside
+            (HASH==='/questionnaire')?<Subside
             title="评价问卷"
             onClickItem={this.onClick.bind(this)}
             current={['1']}

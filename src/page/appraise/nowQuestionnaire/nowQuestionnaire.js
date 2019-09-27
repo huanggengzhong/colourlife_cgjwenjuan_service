@@ -1,12 +1,14 @@
 // 当前问卷页面
 import React, { Component } from 'react'
-import { Breadcrumb, Checkbox, Modal, Row, Button } from 'antd'
+import { Breadcrumb, Checkbox, Modal, Row, Button ,message} from 'antd'
 import './nowQuestionnaire.css'
+import apis from './../../../subpage/subapi'
 
 class Now extends Component {
   state = {
     showModal2: false,
-    showModal3: false
+    showModal3: false,
+    list:''//数据
   }
 
   onChange = () => {
@@ -44,6 +46,22 @@ class Now extends Component {
   onChangeEdit=()=>{
     this.props.history.push('/edit_module') 
   }
+  componentDidMount(){
+    const access_token=window.sessionStorage.getItem('access_token');
+    apis.get({access_token},'/backend/questionlist/current').then(res=>{
+      console.log(res);
+      if(res.code===0){
+        this.setState({
+          list:res.content
+        }
+          
+        )
+      }else{
+        message.error(res.message);
+      }
+      
+    })
+  }
   render() {
     return (
       <div className="nowquestionnaire">
@@ -64,10 +82,13 @@ class Now extends Component {
           </div>
           <div className="bread-content-content">
             <div className="child1">
-              <div className="left">小区评价问卷1</div>
+              <div className="left">{this.state.list.name}</div>
+              {/* <div className="left">小区评价问卷1</div> */}
               <div className="right">
-                <span style={{marginRight:10}}>答卷数:374</span>
-                <span>最近发布时间:2019.9.19</span>
+                <span style={{marginRight:10}}>答卷数:{this.state.list.answer_count}</span>
+                {/* <span style={{marginRight:10}}>答卷数:374</span> */}
+                <span>最近发布时间:{this.state.list.last_time}</span>
+                {/* <span>最近发布时间:2019.9.19</span> */}
               </div>
             </div>
             <div className="child2">

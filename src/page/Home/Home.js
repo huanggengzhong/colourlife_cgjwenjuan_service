@@ -13,8 +13,8 @@ class Home extends Component {
       user: '', //用户信息
       usermenuList: [], //菜单列表数据
       loading: false,
-      access_token: '',
-      current_key:'1'
+      access_token: ''
+     
     }
   }
 
@@ -170,36 +170,13 @@ class Home extends Component {
     })
   }
   onClick(_key) {
-    if (_key === "1") {
-        
-        
-        
-        this.props.history.push(`/nowQuestionnaire?` )
-        // this.props.history.push(`/nowQuestionnaire?access_token=${sessionStorage.getItem('access_token')}` )
-    }else if(_key === "2") {
-        this.props.history.push(`/kuQuestionnaire`)
-        // this.props.history.push(`/kuQuestionnaire?access_token=${sessionStorage.getItem('access_token')}`)
-    
-        this.setState({
-          current_key:window.localStorage.getItem('current_key')
-        })
-    }
-    
+  // console.log(this.props.location.pathname);
+    this.props.history.push(_key)
 }
 onClickYiJian(_key) {
-    if (_key === "1") {
-      this.props.history.push(`/lookidea?` )
-      // this.props.history.push(`/lookidea?access_token=${sessionStorage.getItem('access_token')}` )
-    }else if(_key === "2") {
-        this.props.history.push(`/setidea`)
-        // this.props.history.push(`/setidea?access_token=${sessionStorage.getItem('access_token')}`)
-        
-        
-    }
+        this.props.history.push(_key) 
 }
-componentDidMount(){
-  
-}
+
   render() {
     const HASH=window.location.pathname;
     return (
@@ -237,17 +214,17 @@ componentDidMount(){
             (HASH==='/questionnaire')?<Subside
             title="评价问卷"
             onClickItem={this.onClick.bind(this)}
-            current={['1']}
-            // current={['2']}
+            current={this.props.location.pathname}
+
             menuData={[
               {
-                key: 1,
+                key: '/nowQuestionnaire',
                 name: '当前问卷',
                 icon_src: 'calendar',
                 children: []
               },
               {
-                key: 2,
+                key: '/kuQuestionnaire',
                 name: '问卷库',
                 icon_src: 'appstore',
                 children: []
@@ -257,16 +234,17 @@ componentDidMount(){
             />:<Subside
             title="意见反馈"
             onClickItem={this.onClickYiJian.bind(this)}
-            current={['1']}
+            current={this.props.location.pathname}
+           
             menuData={[
               {
-                key: 1,
+                key: '/lookidea',
                 name: '查看意见',
                 icon_src: 'aliwangwang',
                 children: []
               },
               {
-                key: 2,
+                key: '/setidea',
                 name: '设置类型',
                 icon_src: 'setting',
                 children: []
@@ -274,25 +252,6 @@ componentDidMount(){
             ]}
             />
           }
-          {/* <Subside
-            title="评价问卷"
-            onClickItem={this.onClick.bind(this)}
-            current={['1']}
-            menuData={[
-              {
-                key: 1,
-                name: '当前问卷',
-                icon_src: 'calendar',
-                children: []
-              },
-              {
-                key: 2,
-                name: '问卷库',
-                icon_src: 'appstore',
-                children: []
-              }
-            ]}
-          /> */}
           <Routers {...this.props} />
         </div>
       </div>

@@ -92,4 +92,7 @@ export default {
     get: (params, url) => { return instance.get(`${baseUrl}/${url}`, { params: params }).then(res => res.data) },
  
      // 2019年9月24日15:13:30增加的接口
+    getToken:()=>{
+        return window.sessionStorage.getItem('access_token')
+    }
 }

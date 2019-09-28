@@ -1,14 +1,39 @@
 import React, { Component } from 'react'
-import { Breadcrumb, Icon, Col, Row, Tag, Button } from 'antd'
+import { Breadcrumb, Icon, Col, Row, Tag, Button, message } from 'antd'
 import './detailidea.css'
+import apis from './../../../../subpage/subapi'
 class Detailidea extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      id: '',
+      content: '',
+      zuijiaArr: []
+    }
+  }
+  componentWillMount() {
+    this.setState({
+      id: this.props.match.params.id
+    })
   }
   componentDidMount() {
     // 这里可以正常获取传递过来的值
-    console.log(this.props.match.params.id)
+    // console.log(this.state.id);//
+
+    const access_token = window.sessionStorage.getItem('access_token')
+    apis
+      .get({ access_token, id: this.state.id }, '/backend/feedback/detail')
+      .then(res => {
+        console.log(res)
+        if (res.code === 0) {
+          this.setState({
+            content: res.content,
+            zuijiaArr: res.content.replay_arr
+          })
+        } else {
+          message.error(res.message)
+        }
+      })
   }
   render() {
     return (
@@ -17,14 +42,18 @@ class Detailidea extends Component {
           <div className="yijianxiangqing-title-wrapper">
             <Breadcrumb separator="-">
               <Breadcrumb.Item className="yijianxiangqing-pingjia">
-                <Icon
+                {/* <Icon
                   type="left"
                   style={{ marginLeft: 10, marginRight: 10 }}
                   onClick={() => {
                     console.log(11)
                     this.props.history.goBack(-1)
                   }}
-                />
+                /> */}
+                  <i class="iconfont icon-fanhui1" style={{ marginLeft: '0px', marginRight: '10px',fontSize:'18px' }} onClick={()=>{
+                  console.log(11);
+                  this.props.history.goBack(-1);
+                }}></i>
                 意见反馈
               </Breadcrumb.Item>
               <Breadcrumb.Item>查看意见</Breadcrumb.Item>
@@ -42,21 +71,28 @@ class Detailidea extends Component {
           <div className="content1">
             <Row>
               <Col span={2}>
-                状态: <Tag color="#f50">未回复</Tag>
+                状态:{' '}
+                {this.state.content.is_reply === 1 ? 
+                  <Tag color="#87d068">已回复</Tag>
+                : 
+                <Tag color="#f50">未回复</Tag>
+                  
+                }
               </Col>
-              <Col span={2}>ID:</Col>
-              <Col span={2}>昵称:</Col>
-              <Col span={2}>手机:</Col>
-              <Col span={2}>小区:</Col>
-              <Col span={2}>渠道</Col>
-              <Col span={2}>版本:</Col>
+              <Col span={2}>ID:{this.state.content.community_uuid}</Col>
+              <Col span={2}>昵称:{this.state.content.nick_name}</Col>
+              <Col span={2}>手机:{this.state.content.mobile}</Col>
+              <Col span={2}>小区:{this.state.content.community_name}</Col>
+              <Col span={2}>渠道:{this.state.content.from_type}</Col>
+              <Col span={2}>版本:{this.state.content.version}</Col>
               {/* <Col span={3}></Col> */}
             </Row>
           </div>
           <div className="content1" style={{ marginTop: '20px' }}>
             <Row>
               <Col span={24}>
-                用户反馈:功能使用的意见功能使用的意见功能使用的意见功能使用的意见
+                {/* 用户反馈:功能使用的意见功能使用的意见功能使用的意见功能使用的意见 */}
+                用户反馈: {this.state.content.content}
               </Col>
             </Row>
           </div>
@@ -70,13 +106,10 @@ class Detailidea extends Component {
             <div className="child2">
               <textarea cols="220" rows="10" />
             </div>
-            <div className='zuijia'>
+            <div className="zuijia">
               <Button
                 style={{
-                  
-                  borderRadius: '15px',
-                  
-                  
+                  borderRadius: '15px'
                 }}
               >
                 追加回复
@@ -86,7 +119,34 @@ class Detailidea extends Component {
 
           <div className="huifu-recored">
             <div className="huifu-title">回复记录</div>
-            <Row className="child1" style={{ marginTop: '10px' }}>
+            {this.state.zuijiaArr.map((item, index) => {
+              return (
+                <Row className="child1" style={{ marginTop: '10px' }} key={index}>
+                  <Button
+                    style={{
+                      borderRadius: '15px',
+                      padding: '1px',
+                      marginRight: '20px',
+                      height: '28px',
+                      lineHeight: '17px'
+                    }}
+                  >
+                    追加回复
+                  </Button>
+                  <div
+                    className="man"
+                    style={{ marginRight: '20px', width: '100px' }}
+                  >
+                    处理人:{item.reply_name}
+                  </div>
+                  {/* <div className='man' style={{width:'100px'}}></div> */}
+                  <div className="content" style={{ marginRight: '20px' }}>
+                    回复内容:{item.content}
+                  </div>
+                </Row>
+              )
+            })}
+            {/* <Row className="child1" style={{ marginTop: '10px' }}>
               <Button
                 style={{
                   borderRadius: '15px',
@@ -104,7 +164,7 @@ class Detailidea extends Component {
               >
                 处理人:李四
               </div>
-              {/* <div className='man' style={{width:'100px'}}></div> */}
+              
               <div className="content" style={{ marginRight: '20px' }}>
                 回复内容:哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈
               </div>
@@ -127,34 +187,11 @@ class Detailidea extends Component {
               >
                 处理人:李四
               </div>
-              {/* <div className='man' style={{width:'100px'}}></div> */}
+            
               <div className="content" style={{ marginRight: '20px' }}>
                 回复内容:哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈
               </div>
-            </Row>
-            <Row className="child1" style={{ marginTop: '10px' }}>
-              <Button
-                style={{
-                  borderRadius: '15px',
-                  padding: '1px',
-                  marginRight: '20px',
-                  height: '28px',
-                  lineHeight: '17px'
-                }}
-              >
-                追加回复
-              </Button>
-              <div
-                className="man"
-                style={{ marginRight: '20px', width: '100px' }}
-              >
-                处理人:李四
-              </div>
-              {/* <div className='man' style={{width:'100px'}}></div> */}
-              <div className="content" style={{ marginRight: '20px' }}>
-                回复内容:哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈
-              </div>
-            </Row>
+            </Row> */}
           </div>
         </div>
       </div>

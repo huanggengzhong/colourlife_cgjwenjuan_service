@@ -1,19 +1,4 @@
-// import React, { Component } from 'react';
-// class Datawenjuan extends Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = {  }
-//     }
-//     render() {
-//         return (
-//             <div>
-//                 问卷数据
-//             </div>
-//          );
-//     }
-// }
 
-// export default Datawenjuan;
 
 import React, { Component } from 'react'
 import history from './../../../../router/history'
@@ -36,19 +21,19 @@ import {
 import apis from './../../../../subpage/subapi'
 import './allidea.css'
 
-const menu = (
-    <Menu >
-      <Menu.Item key="1">
-        <Icon type="border" />
-        按选项序号下载
-      </Menu.Item>
-      <Menu.Item key="2">
-        <Icon type="border" />
-        按选项文本下载
-      </Menu.Item>
+// const menu = (
+//     <Menu >
+//       <Menu.Item key="1">
+//         <Icon type="border" />
+//         按选项序号下载
+//       </Menu.Item>
+//       <Menu.Item key="2">
+//         <Icon type="border" />
+//         按选项文本下载
+//       </Menu.Item>
     
-    </Menu>
-  );
+//     </Menu>
+//   );
 export default class Show extends Component {
   constructor(props) {
     super(props)
@@ -78,14 +63,7 @@ export default class Show extends Component {
       phone: null,
       nickname: null,
       questionList: [
-        // { question: "界面风格满意度？", id: 1, "answer": 2 },
-        // { question: "操作简便满意度？", id: 2, "answer": 2 },
-        // { question: "稳定性满意度？", id: 3, "answer": 3 },
-        // { question: "帮助与反馈满意度（提供的帮助与反馈的及时性）？", id: 4, "answer": 2 },
-        // { question: "界面风格满意度？", id: 1, "answer": 2 },
-        // { question: "操作简便满意度？", id: 2, "answer": 2 },
-        // { question: "稳定性满意度？", id: 3, "answer": 3 },
-        // { question: "帮助与反馈满意度（提供的帮助与反馈的及时性）？", id: 4, "answer": 2 },
+       
       ],
       answerList: [
         { name: '非常满意', id: 1 },
@@ -116,6 +94,8 @@ export default class Show extends Component {
     }
     apis.get(params, `backend/versionList`).then(res => {
       if (res.code == 0) {
+        console.log(res);
+        
         this.setState({
           versionList: res.content
         })
@@ -145,6 +125,8 @@ export default class Show extends Component {
       page_size: this.state.pageSize
     }
     apis.get(params, `backend/search`).then(res => {
+      console.log(res);
+      
       if (res.code == 0) {
         this.setState({
           data: res.content.list,
@@ -509,30 +491,7 @@ export default class Show extends Component {
         width: 250,
         render: text => <span>意见详情意见详情意见详情意见详情意见详情</span>
       },
-    //   {
-    //     title: '好评率',
-    //     align: 'center',
-    //     dataIndex: 'praise',
-    //     key: 'praise',
-    //     width: 100,
-    //     render: text => <span>{this.tofixed(text)}</span>
-    //   },
-    //   {
-    //     title: '用户满意度',
-    //     align: 'center',
-    //     dataIndex: 'satisfied',
-    //     key: 'satisfied',
-    //     width: 150,
-    //     render: text => <span>{this.tofixed(text)}</span>
-    //   },
-    //   {
-    //     title: '评价时间',
-    //     align: 'center',
-    //     dataIndex: 'create_at',
-    //     key: 'create_at',
-    //     width: 200,
-    //     render: text => <span>{text}</span>
-    //   },
+  
       {
         title: '操作',
         align: 'center',
@@ -615,13 +574,7 @@ export default class Show extends Component {
                   <Option value={item} index={index}>{item.name}</Option>
                 ))}
               </Select>
-              {/* <Select size="small" defaultValue="请选择" style={{ width: 100 }} onChange={this.selectCommunity} value={this.state.community}>
-                                {
-                                    this.state.versionList.map((item, index) => (
-                                        <Option value={item.version}>{item.version}</Option>
-                                    ))
-                                }
-                            </Select> */}
+             
             </div>
             <div className="phone search_item">
               <span className="txt">手机号：</span>
@@ -713,11 +666,7 @@ export default class Show extends Component {
                       value={item.answer}
                     >
                       {this.state.answerList.map((item1, index1) => (
-                        // <div className="radio_item">
-                        //     <input type="radio" name={index+1}  id={`${index}_${index1}`} value={item.answer}/>
-                        //     {/* <label for={`${index}_${index1}`}>{item1}</label> */}
-                        //     <label for={`${index}_${index1}`}>{item1.name}</label>
-                        // </div>
+                      
                         <Radio value={5 - index1} disabled key={index1}>
                           {item1.name}
                         </Radio>

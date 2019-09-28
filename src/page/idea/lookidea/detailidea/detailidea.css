@@ -46,7 +46,7 @@ display: flex;
 .yijianxiangqing .huifu-fankui .zuijia{
     position: absolute;
     
-    right: 50px;
+    right: 87px;
     bottom: -41px;
     width: 80px;
 
@@ -54,9 +54,9 @@ display: flex;
   
  
 }
-.yijianxiangqing .huifu-fankui .child1{
+/* .yijianxiangqing .huifu-fankui .child1{
     width: 90px;
-   }
+   } */
 .yijianxiangqing .huifu-fankui .child2{
    
     flex:1;

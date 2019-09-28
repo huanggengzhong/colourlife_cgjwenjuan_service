@@ -215,7 +215,6 @@ onClickYiJian(_key) {
             title="评价问卷"
             onClickItem={this.onClick.bind(this)}
             current={this.props.location.pathname}
-
             menuData={[
               {
                 key: '/nowQuestionnaire',

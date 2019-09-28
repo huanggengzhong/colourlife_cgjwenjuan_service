@@ -21,10 +21,14 @@ class DataSurvey extends Component {
                 className="bread-pingjia"
                 style={{ marginLeft: 10 }}
               >
-                <Icon type="left" style={{ marginLeft: 10, marginRight: 10 }} onClick={()=>{
+                <i class="iconfont icon-fanhui1" style={{ marginLeft: '0px', marginRight: '10px',fontSize:'18px' }} onClick={()=>{
                   console.log(11);
                   this.props.history.goBack(-1);
-                }}/>
+                }}></i>
+                {/* <Icon type="left" style={{ marginLeft: 10, marginRight: 10 }} onClick={()=>{
+                  console.log(11);
+                  this.props.history.goBack(-1);
+                }}/> */}
                 评价问卷
               </Breadcrumb.Item>
               <Breadcrumb.Item>当前问卷</Breadcrumb.Item>
@@ -47,5 +51,4 @@ class DataSurvey extends Component {
     )
   }
 }
-
 export default DataSurvey

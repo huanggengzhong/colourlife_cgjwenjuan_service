@@ -3,13 +3,14 @@ import React, { Component } from 'react'
 import { Breadcrumb, Checkbox, Modal, Row, Button, message } from 'antd'
 import './nowQuestionnaire.css'
 import apis from './../../../subpage/subapi'
-
 class Now extends Component {
   state = {
     showModal2: false,
     showModal3: false,
+   
     list: '', //数据
     tiHuanList: []
+    
   }
 
   onChange = () => {
@@ -102,7 +103,9 @@ class Now extends Component {
           </div>
           <div className="bread-content-content">
             <div className="child1">
-              <div className="left" onClick={this.onChangeData}>{this.state.list.name}</div>
+              <div className="left" onClick={this.onChangeData}>
+                {this.state.list.name}
+              </div>
               {/* <div className="left">小区评价问卷1</div> */}
               <div className="right">
                 <span style={{ marginRight: 10 }}>
@@ -126,9 +129,10 @@ class Now extends Component {
                 <Checkbox onChange={this.onChangeTihuan} checked={false}>
                   替换问卷
                 </Checkbox>
-                <Checkbox onChange={this.onChangeCopy} checked={false}>
+                {/* 2019年10月31日16:57:41收到通知说不需要复制 */}
+                {/* <Checkbox onChange={this.onChangeCopy} checked={false}>
                   复制
-                </Checkbox>
+                </Checkbox> */}
               </div>
             </div>
           </div>
@@ -143,32 +147,30 @@ class Now extends Component {
             })
           }}
         >
-          <Checkbox.Group style={{ width: '100%' }}>
+          <div style={{ width: '100%' }}>
             {this.state.tiHuanList.map((item, index) => {
               return (
-                <Row key={index} style={{marginTop:'10px',marginLeft:'30px',fontSize:'24px'}}>
+                <Row
+                  key={index}
+                  style={{
+                    marginTop: '10px',
+                    marginLeft: '30px',
+                    fontSize: '24px'
+                  }}
+                >
                   <Checkbox value={item.name}>{item.name}</Checkbox>
+              
                 </Row>
               )
             })}
-            {/* <Row>
-              <Checkbox value="B">小区评价当前问卷</Checkbox>
-            </Row>
-            <Row>
-              <Checkbox value="C">小区评价当前问卷</Checkbox>
-            </Row>
-            <Row>
-              <Checkbox value="D">小区评价当前问卷</Checkbox>
-            </Row>
-            <Row>
-              <Checkbox value="E">小区评价当前问卷</Checkbox>
-            </Row> */}
+
+          
             <p className="nowquestionnaire-set">
               <Button type="primary" onClick={this.handleSetwenjuqn}>
                 设为小区评价当前问卷
               </Button>
             </p>
-          </Checkbox.Group>
+          </div>
         </Modal>
         <Modal
           visible={this.state.showModal3}

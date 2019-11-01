@@ -1,22 +1,21 @@
 import React, { Component } from 'react'
-import { Table, Divider, Button, Row, Col, Modal, Input ,message} from 'antd'
+import { Table, Divider, Button, Row, Col, Modal, Input, message } from 'antd'
 import './setlet.css'
 import apis from './../../../../subpage/subapi'
-const { confirm } = Modal;
-
-
+const { confirm } = Modal
 
 class Setlei extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      contentedit: '',
       showModal1: false,
       showModal2: false,
-      inputValue:'',
-      inputValue2:'',
-      editData:'',
-      tableList:[],
-      columns :[
+      inputValue: '',
+      inputValue2: '',
+      editData: '',
+      tableList: [],
+      columns: [
         {
           title: '类型名称',
           dataIndex: 'name',
@@ -28,38 +27,50 @@ class Setlei extends Component {
           key: 'action',
           render: (text, record) => (
             <span>
-              <a onClick={this.handleShow2.bind(this,text)}>编辑</a>
+              <a onClick={this.handleShow2.bind(this, text)}>编辑</a>
               <Divider type="vertical" />
-              <span onClick={this.handleDelete.bind(this,text)}>删除</span>
+              <a
+                onClick={this.handleDelete.bind(this, text)}
+                style={{ color: 'red' }}
+              >
+                删除
+              </a>
             </span>
           )
         }
       ]
-
     }
   }
-  handleEdit=()=>{
-    const  access_token =apis.getToken()
-    let _this=this
-    apis.get({access_token,name:this.state.inputValue2,id:this.state.editData.id},'/backend/feedbackType/edit').then(res=>{
-      console.log(res);
-      if(res.code===0){
-        message.success(res.content);
-        _this.setState({
-          showModal2: false,
-          inputValue2:''
-        })
-        _this.getData();
-      }else{
-        message.error(res.message);
-      }
-    })
-    
+  handleEdit = () => {
+    const access_token = apis.getToken()
+    let _this = this
+    apis
+      .get(
+        {
+          access_token,
+          name: this.state.inputValue2,
+          id: this.state.editData.id
+        },
+        '/backend/feedbackType/edit'
+      )
+      .then(res => {
+        console.log(res)
+        if (res.code === 0) {
+          message.success(res.content)
+          _this.setState({
+            showModal2: false,
+            inputValue2: ''
+          })
+          _this.getData()
+        } else {
+          message.error(res.message)
+        }
+      })
   }
-  handleDelete=(text)=>{
-    console.log(text);
-    const  access_token =apis.getToken()
-    let _this=this
+  handleDelete = text => {
+    console.log(text)
+    const access_token = apis.getToken()
+    let _this = this
     confirm({
       title: '你真的要删除吗?',
       // content: 'Some descriptions',
@@ -67,82 +78,105 @@ class Setlei extends Component {
       okType: 'danger',
       cancelText: '取消',
       onOk() {
-        apis.get({access_token,id:text.id},'/backend/feedbackType/del').then(res=>{
-          console.log(res);
-          if(res.code===0){
-            message.success(res.content);
-           
-            _this.getData();
-          }else{
-            message.error(res.message);
-          }
-        })
+        apis
+          .get({ access_token, id: text.id }, '/backend/feedbackType/del')
+          .then(res => {
+            console.log(res)
+            if (res.code === 0) {
+              message.success(res.content)
+
+              _this.getData()
+            } else {
+              message.error(res.message)
+            }
+          })
       },
       onCancel() {
-        console.log('Cancel');
-      },
-    });
-    
- 
+        console.log('Cancel')
+      }
+    })
   }
   handleShow = () => {
+    console.log("新增");
+    
+    console.log(this.state.inputValue);
+    
     this.setState({
-      showModal1: true
+      showModal1: true,
+      inputValue: '',
+      inputValue2: ''
     })
+   
   }
-  handleShow2 = (text) => {
+  handleShow2 = text => {
     this.setState({
       showModal2: true,
-      editData:text
+      inputValue2: text.name,
+      editData: text
     })
   }
-  handleInput=(e)=>{
+  handleInput = e => {
     // console.log(e.target.value);
-    
+
     this.setState({
-      inputValue:e.target.value
+      inputValue: e.target.value
     })
   }
-  handleInput2=(e)=>{
+  handleInput2 = e => {
     // console.log(e.target.value);
-    
+
     this.setState({
-      inputValue2:e.target.value
+      inputValue2: e.target.value
     })
   }
-  handleAdd(){
-    const  access_token =apis.getToken()
-    let _this=this
-    apis.get({access_token,name:this.state.inputValue},'/backend/feedbackType/add').then(res=>{
-      console.log(res);
-      if(res.code===0){
-        message.success(res.content);
-        _this.setState({
-          showModal1: false,
-          inputValue:''
-        })
-        _this.getData();
-      }else{
-        message.error(res.message);
-      }
-    })
+  handleAdd() {
+    const access_token = apis.getToken()
+    let _this = this
+    apis
+      .get(
+        { access_token, name: this.state.inputValue },
+        '/backend/feedbackType/add'
+      )
+      .then(res => {
+        console.log(res)
+        if (res.code === 0) {
+          message.success(res.content)
+          _this.setState({
+            inputValue: '',
+            showModal1: false,
+            
+          },()=>{
+            _this.getData()
+          })
+          
+        } else {
+          message.error(res.message)
+        }
+      })
+      
+      
   }
-  getData(){
-    const  access_token =apis.getToken()
-  
-    apis.get({access_token,name:this.state.inputValue},'/backend/feedbackType/list').then(res=>{
-      console.log(res);
-      if(res.code===0){
-        this.setState({
-          tableList:res.content
-        })
-      }else{
-        message.error(res.message);
-      }
-    })
+  getData() {
+    const access_token = apis.getToken()
+
+    apis
+      .get(
+        { access_token, name: this.state.inputValue },
+        '/backend/feedbackType/list'
+      )
+      .then(res => {
+        console.log(res)
+        if (res.code === 0) {
+          this.setState({
+            tableList: res.content
+          })
+        } else {
+          message.error(res.message)
+        }
+      })
   }
-  componentDidMount(){
-   this.getData();
+  componentDidMount() {
+    this.getData()
   }
   render() {
     return (
@@ -191,12 +225,19 @@ class Setlei extends Component {
               类型名称:
             </Col>
             <Col span={19}>
-              <Input placeholder="请输入要增加的类型" onChange={this.handleInput} style={{borderRadius:'17px'}}/>
+              <Input
+                placeholder="请输入要增加的类型"
+                onChange={this.handleInput}
+                style={{ borderRadius: '17px' }}
+                value={this.state.inputValue}
+              />
             </Col>
           </Row>
           <Row style={{ marginTop: 35 }}>
             <Col align="center">
-              <Button type="primary" onClick={this.handleAdd.bind(this)}>确定</Button>
+              <Button type="primary" onClick={this.handleAdd.bind(this)}>
+                确定
+              </Button>
             </Col>
           </Row>
         </Modal>
@@ -217,12 +258,19 @@ class Setlei extends Component {
               类型名称:
             </Col>
             <Col span={19}>
-              <Input placeholder="请输入新的类型名" onChange={this.handleInput2} style={{borderRadius:'17px'}}/>
+              <Input
+                placeholder="请输入新的类型名"
+                onChange={this.handleInput2}
+                style={{ borderRadius: '17px' }}
+                value={this.state.inputValue2}
+              />
             </Col>
           </Row>
           <Row style={{ marginTop: 35 }}>
             <Col align="center">
-              <Button type="primary" onClick={this.handleEdit.bind(this)}>确定</Button>
+              <Button type="primary" onClick={this.handleEdit.bind(this)}>
+                确定
+              </Button>
             </Col>
           </Row>
         </Modal>

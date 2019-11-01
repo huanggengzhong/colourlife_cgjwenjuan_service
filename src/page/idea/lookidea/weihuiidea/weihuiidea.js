@@ -31,7 +31,9 @@ import {
   InputNumber,
 
   DatePicker,
-  Radio
+  Radio,
+  Row,
+  Col
 } from 'antd'
 import apis from './../../../../subpage/subapi'
 import './weihuiidea.css'
@@ -53,6 +55,7 @@ export default class Show extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      yijiancontent:'',
       userName: null,
       modalVisible: false,
       access_token: null,
@@ -74,7 +77,7 @@ export default class Show extends Component {
       isStaff: null,
       version: '请选择',
       sex: null,
-      community: '请输入小区',
+      community: '请选择小区',
       phone: null,
       nickname: null,
       questionList: [
@@ -136,7 +139,8 @@ export default class Show extends Component {
       page: 1,
       page_size: this.state.pageSize
     }
-    apis.get(params, `backend/search`).then(res => {
+    // apis.get(params, `backend/search`).then(res => {
+      apis.get(params, `backend/feedback/list/one`).then(res => {
       if (res.code == 0) {
         this.setState({
           data: res.content.list,
@@ -172,7 +176,8 @@ export default class Show extends Component {
       page: this.state.currentPage,
       page_size: this.state.pageSize
     }
-    apis.get(params, `backend/search`).then(res => {
+    // apis.get(params, `backend/search`).then(res => {
+      apis.get(params, `backend/feedback/list/one`).then(res => {
       if (res.code == 0) {
         this.setState({
           data: res.content.list,
@@ -314,6 +319,11 @@ export default class Show extends Component {
       nickname: e.target.value
     })
   }
+  yijiancontent = e => {
+    this.setState({
+      yijiancontent: e.target.value
+    })
+  }
   search = () => {
     this.fetchData()
     // var reg = 11 && /^((13|14|15|16|17|18)[0-9]{1}\d{8})$/;  //手机号正则
@@ -323,17 +333,24 @@ export default class Show extends Component {
   }
   clear = () => {
     // dateString = ['','']
-    this.setState({
-      // startTime: null,
-      // endTime: null,
-      way: null,
-      isStaff: null,
-      version: '请选择',
-      sex: null,
-      community: '请输入小区',
-      phone: null,
-      nickname: null
-    })
+    this.setState(
+      {
+        startTime: null,
+        endTime: null,
+        way: null,
+        // isStaff: null,
+        version: '请选择',
+        sex: null,
+        community: '请选择小区',
+        phone: null,
+        nickname: null,
+        yijiancontent:''
+      },
+      () => {
+        // this.searchCommunity()
+        this.fetchData()
+      }
+    )
   }
   setModalVisible(val) {
     this.setState({ modalVisible: val })
@@ -397,13 +414,36 @@ export default class Show extends Component {
     return Number(val).toFixed(1) + '%'
   }
   goIdeaDetail=(item)=>{
-    console.log(item.id);
-    let pathData={
-      pathname:'/lookidea/detail',
-      query:item.id
+    console.log(item.id)
+    let pathData = {
+      pathname: `/lookidea/detail/${item.id}?access_token=${window.sessionStorage.getItem("access_token")}`,
+      query: item.id
     }
-   history.push(`/lookidea/detail/${item.id}`)
+    // history.push(`/lookidea/detail/${item.id}?access_token=${window.sessionStorage.getItem("access_token")}`)
+    history.push(pathData)
   }
+  // 2019年10月30日19:36:54
+  Download = () => {
+    var url = document.domain
+    var baseUrl
+    if (url == 'https://yjfk-backend-czy.colourlife.com') {
+      baseUrl = 'https://yjfk-backend-czy.colourlife.com'
+    } else {
+      baseUrl = 'https://yjfk-backend-czytest.colourlife.com'
+    }
+
+    // 后续记得检查数据是否有错,目前发现少了内容
+    window.location.href = `${baseUrl}/backend/feedback/excel?access_token=${window.sessionStorage.getItem(
+      'access_token'
+    )}&time_start=${this.state.startTime}&time_end=${
+      this.state.endTime
+    }&from_type=${this.state.way}&version=${this.state.version}&gender=${
+      this.state.sex
+    }&community_id=${this.state.community}&mobile=${
+      this.state.phone
+    }&nick_name=${this.state.nickname}`
+  }
+  // 2019年10月30日19:36:54
   render() {
     const { RangePicker } = DatePicker
     const RadioGroup = Radio.Group
@@ -413,12 +453,21 @@ export default class Show extends Component {
       {
         title: '状态',
         align: 'center',
-        dataIndex: 'user_state',
-        key: 'user_state',
+        dataIndex: 'is_replay',
+        key: 'is_replay',
         width: 100,
-        render: text => 
-        // <Tag color="#87d068">已回复</Tag>
-        <Tag color="#f50">未回复</Tag>
+        // render: text => 
+        // // <Tag color="#87d068">已回复</Tag>
+        // <Tag color="#f50">未回复</Tag>
+        render: text => {
+          if(text===0){
+          return  <Tag color="#f50" style={{padding:0}}>未回复</Tag>
+          }else if(text===1){
+            return <Tag color="#87d068" style={{padding:0}}>已回复</Tag>
+          }
+        
+          
+        }
     
       },
       {
@@ -426,7 +475,7 @@ export default class Show extends Component {
         align: 'center',
         dataIndex: 'user_id',
         key: 'user_id',
-        width: 60,
+        width: 160,
         render: text => <span>{text}</span>
       },
       {
@@ -434,7 +483,7 @@ export default class Show extends Component {
         align: 'center',
         dataIndex: 'nick_name',
         key: 'nick_name',
-        width: 160,
+        width: 100,
         render: text => <span>{text}</span>
       },
       {
@@ -442,7 +491,7 @@ export default class Show extends Component {
         align: 'center',
         dataIndex: 'mobile',
         key: 'mobile',
-        width: 100,
+        width: 140,
         render: text => <span>{text}</span>
       },
       {
@@ -475,7 +524,8 @@ export default class Show extends Component {
         dataIndex: 'from_type',
         key: 'from_type',
         width: 100,
-        render: text => <span>{this.renderWay(text)}</span>
+        render: text => <span>{text}</span>
+        // render: text => <span>{this.renderWay(text)}</span>
       },
       {
         title: '版本',
@@ -488,43 +538,20 @@ export default class Show extends Component {
       {
         title: '分类',
         align: 'center',
-        dataIndex: 'fenlei',
-        key: 'fenlei',
+        dataIndex: 'feedback_type',
+        key: 'feedback_type',
         width: 100,
-        render: text => <span>分类</span>
+        render: text => <span>{text}</span>
       },
           {
         title: '意见详情',
         align: 'center',
-        dataIndex: 'yijianxiangqing',
-        key: 'yijianxiangqing',
-        width: 250,
-        render: text => <span>意见详情意见详情意见详情意见详情意见详情</span>
+        dataIndex: 'content',
+        key: 'content',
+        width: 450,
+        render: text => <span>{text}</span>
       },
-    //   {
-    //     title: '好评率',
-    //     align: 'center',
-    //     dataIndex: 'praise',
-    //     key: 'praise',
-    //     width: 100,
-    //     render: text => <span>{this.tofixed(text)}</span>
-    //   },
-    //   {
-    //     title: '用户满意度',
-    //     align: 'center',
-    //     dataIndex: 'satisfied',
-    //     key: 'satisfied',
-    //     width: 150,
-    //     render: text => <span>{this.tofixed(text)}</span>
-    //   },
-    //   {
-    //     title: '评价时间',
-    //     align: 'center',
-    //     dataIndex: 'create_at',
-    //     key: 'create_at',
-    //     width: 200,
-    //     render: text => <span>{text}</span>
-    //   },
+  
       {
         title: '操作',
         align: 'center',
@@ -538,6 +565,20 @@ export default class Show extends Component {
       }
     ]
     return (
+      <div style={{ position: 'relative' }}>
+      <Row>
+        <Col span={24}>
+          <Button
+            type="primary"
+            className="lookdetail-daochu"
+            style={{ position: 'absolute', top: '-57px', right: '7px' }}
+            onClick={this.Download}
+          >
+            导出
+          </Button>
+        </Col>
+      </Row>
+        {/* 2019年10月16日11:22:30增加的 */}
       <div className="show">
     
         <div className="search_box" style={{ position: 'relative' }}>
@@ -607,13 +648,7 @@ export default class Show extends Component {
                   <Option value={item} index={index}>{item.name}</Option>
                 ))}
               </Select>
-              {/* <Select size="small" defaultValue="请选择" style={{ width: 100 }} onChange={this.selectCommunity} value={this.state.community}>
-                                {
-                                    this.state.versionList.map((item, index) => (
-                                        <Option value={item.version}>{item.version}</Option>
-                                    ))
-                                }
-                            </Select> */}
+             
             </div>
             <div className="phone search_item">
               <span className="txt">手机号：</span>
@@ -642,8 +677,8 @@ export default class Show extends Component {
                 placeholder="请输入意见内容"
                 className="phone_input"
                 size="small"
-                // onChange={this.selectNickname}
-                // value={this.state.nickname}
+                onChange={this.yijiancontent}
+                value={this.state. yijiancontent}
               />
             </div>
           </div>
@@ -705,11 +740,7 @@ export default class Show extends Component {
                       value={item.answer}
                     >
                       {this.state.answerList.map((item1, index1) => (
-                        // <div className="radio_item">
-                        //     <input type="radio" name={index+1}  id={`${index}_${index1}`} value={item.answer}/>
-                        //     {/* <label for={`${index}_${index1}`}>{item1}</label> */}
-                        //     <label for={`${index}_${index1}`}>{item1.name}</label>
-                        // </div>
+                      
                         <Radio value={5 - index1} disabled key={index1}>
                           {item1.name}
                         </Radio>
@@ -726,6 +757,7 @@ export default class Show extends Component {
           </Modal>
         </div>
       </div>
+    </div>
     )
   }
 }

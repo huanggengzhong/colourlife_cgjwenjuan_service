@@ -8,8 +8,11 @@ class Detailidea extends Component {
     this.state = {
       id: '',
       content: '',
-      zuijiaArr: []
+      zuijiaArr: [],
+      value:'',
+      imageList:[]
     }
+    this.handleChange = this.handleChange.bind(this);
   }
   componentWillMount() {
     this.setState({
@@ -19,21 +22,53 @@ class Detailidea extends Component {
   componentDidMount() {
     // 这里可以正常获取传递过来的值
     // console.log(this.state.id);//
-
+    console.log(this.state.content);
+    
+this.getData();
+  
+  }
+  getData(){
     const access_token = window.sessionStorage.getItem('access_token')
     apis
-      .get({ access_token, id: this.state.id }, '/backend/feedback/detail')
+      .get({ access_token, id: this.state.id }, 'backend/feedback/detail')
       .then(res => {
-        console.log(res)
+        console.log(res.content.replay_arr)
         if (res.code === 0) {
           this.setState({
             content: res.content,
-            zuijiaArr: res.content.replay_arr
+            zuijiaArr: res.content.replay_arr,
+            imageList:res.content.image
           })
         } else {
           message.error(res.message)
         }
       })
+  }
+  handleChange(event) {
+    // console.log(event.target.value);
+    
+    this.setState({value: event.target.value});
+  }
+  handleAdd=()=>{
+    console.log(this.state.id);
+    console.log(this.state.value);
+    const access_token = window.sessionStorage.getItem('access_token')
+    apis
+      .get({ access_token, id: this.state.id,content:this.state.value }, 'backend/feedback/add')
+      .then(res => {
+        console.log(res)
+        if (res.code === 0) {
+          this.setState({
+           value:''
+          },()=>{
+            message.success(res.content) 
+            this.getData();
+          })
+        } else {
+          message.error(res.message)
+        }
+      })
+    
   }
   render() {
     return (
@@ -50,7 +85,7 @@ class Detailidea extends Component {
                     this.props.history.goBack(-1)
                   }}
                 /> */}
-                  <i class="iconfont icon-fanhui1" style={{ marginLeft: '0px', marginRight: '10px',fontSize:'18px' }} onClick={()=>{
+                  <i className="iconfont icon-fanhui1" style={{ marginLeft: '0px', marginRight: '10px',fontSize:'18px' }} onClick={()=>{
                   console.log(11);
                   this.props.history.goBack(-1);
                 }}></i>
@@ -75,7 +110,7 @@ class Detailidea extends Component {
                 {this.state.content.is_reply === 1 ? 
                   <Tag color="#87d068">已回复</Tag>
                 : 
-                <Tag color="#f50">未回复</Tag>
+                (<Tag color="#f50">未回复</Tag>)
                   
                 }
               </Col>
@@ -97,52 +132,71 @@ class Detailidea extends Component {
             </Row>
           </div>
           <div className="image-wrapper">
-            <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569424674249&di=e728f7a625f1d4008f461de25c87771d&imgtype=0&src=http%3A%2F%2Fdpic.tiankong.com%2Fu7%2Fn2%2FQJ7103954309.jpg%3Fx-oss-process%3Dstyle%2Fshow" />
-            <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569424674249&di=e728f7a625f1d4008f461de25c87771d&imgtype=0&src=http%3A%2F%2Fdpic.tiankong.com%2Fu7%2Fn2%2FQJ7103954309.jpg%3Fx-oss-process%3Dstyle%2Fshow" />
-            <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569424674249&di=e728f7a625f1d4008f461de25c87771d&imgtype=0&src=http%3A%2F%2Fdpic.tiankong.com%2Fu7%2Fn2%2FQJ7103954309.jpg%3Fx-oss-process%3Dstyle%2Fshow" />
+            {
+              this.state.imageList.map((item,index)=>{
+                return (
+                  <img src={item} key={index}/>
+                )
+              })
+            }
+            {/* <img src={this.state.content.image} />
+            <img src={this.state.content.image} />
+            <img src={this.state.content.image} /> */}
           </div>
+          <form >
           <div className="huifu-fankui">
             <div className="child1">回复反馈:</div>
             <div className="child2">
-              <textarea cols="220" rows="10" />
+              <textarea cols="190" rows="10" onChange={this.handleChange} value={this.state.value} />
             </div>
             <div className="zuijia">
               <Button
                 style={{
                   borderRadius: '15px'
                 }}
+                onClick={this.handleAdd}
+                type="primary"
               >
                 追加回复
               </Button>
             </div>
           </div>
-
+          </form>
           <div className="huifu-recored">
             <div className="huifu-title">回复记录</div>
             {this.state.zuijiaArr.map((item, index) => {
               return (
                 <Row className="child1" style={{ marginTop: '10px' }} key={index}>
-                  <Button
+                  <Col span={1}>
+                  <div
                     style={{
+                      // width: '70px',
+                      border:"1px solid #ccc",
                       borderRadius: '15px',
-                      padding: '1px',
-                      marginRight: '20px',
+                      // paddingLeft:'5px',
+                      // paddingRight:'5px',
+                      // marginRight: '20px',
                       height: '28px',
-                      lineHeight: '17px'
+                      lineHeight: '28px'
                     }}
                   >
                     追加回复
-                  </Button>
+                  </div>
+                  </Col>
+                  <Col span={2}>
                   <div
+                    style={{ textAlign: "center"}}
                     className="man"
-                    style={{ marginRight: '20px', width: '100px' }}
                   >
                     处理人:{item.reply_name}
                   </div>
+                  </Col>
+                  <Col span={18}>
                   {/* <div className='man' style={{width:'100px'}}></div> */}
                   <div className="content" style={{ marginRight: '20px' }}>
                     回复内容:{item.content}
                   </div>
+                  </Col>
                 </Row>
               )
             })}

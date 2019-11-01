@@ -15,16 +15,18 @@ class Lookdetail extends Component {
   }
   render() {
     return (
-      <div className='lookdetail'>
-            <Row>
+      <div className='lookdetail' className="weihui-wrapper">
+            {/* <Row>
                   <Col span={24}>
                   <Button type="primary" className='lookdetail-daochu'>导出</Button>
                   </Col>
-              </Row>
-        <Tabs defaultActiveKey="3" type="line">
-      
+              </Row> */}
+              <span className="weihui-dot"></span>
+        <Tabs defaultActiveKey="3" type="line" >
+        
           <TabPane tab="未回复意见" key="1" >
           {/* 未回复意见 */}
+         
           <Weihuiidea/>
           </TabPane>
           <TabPane tab="已回复意见" key="2">

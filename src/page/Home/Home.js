@@ -14,7 +14,6 @@ class Home extends Component {
       usermenuList: [], //菜单列表数据
       loading: false,
       access_token: ''
-     
     }
   }
 
@@ -170,15 +169,15 @@ class Home extends Component {
     })
   }
   onClick(_key) {
-  // console.log(this.props.location.pathname);
+    // console.log(this.props.location.pathname);
     this.props.history.push(_key)
-}
-onClickYiJian(_key) {
-        this.props.history.push(_key) 
-}
+  }
+  onClickYiJian(_key) {
+    this.props.history.push(_key)
+  }
 
   render() {
-    const HASH=window.location.pathname;
+    const HASH = window.location.pathname
     return (
       <div
         style={{
@@ -211,44 +210,45 @@ onClickYiJian(_key) {
             loading={this.state.loading}
           />
           {
-            (HASH==='/questionnaire')?<Subside
-            title="评价问卷"
-            onClickItem={this.onClick.bind(this)}
-            current={this.props.location.pathname}
-            menuData={[
-              {
-                key: '/nowQuestionnaire',
-                name: '当前问卷',
-                icon_src: 'calendar',
-                children: []
-              },
-              {
-                key: '/kuQuestionnaire',
-                name: '问卷库',
-                icon_src: 'appstore',
-                children: []
-              }
-            ]}
-            
-            />:<Subside
-            title="意见反馈"
-            onClickItem={this.onClickYiJian.bind(this)}
-            current={this.props.location.pathname}
-           
-            menuData={[
-              {
-                key: '/lookidea',
-                name: '查看意见',
-                icon_src: 'aliwangwang',
-                children: []
-              },
-              {
-                key: '/setidea',
-                name: '设置类型',
-                icon_src: 'setting',
-                children: []
-              }
-            ]}
+            // (HASH==='/questionnaire')?<Subside
+            // title="评价问卷"
+            // onClickItem={this.onClick.bind(this)}
+            // current={this.props.location.pathname}
+            // menuData={[
+            //   {
+            //     key: '/nowQuestionnaire',
+            //     name: '当前问卷',
+            //     icon_src: 'calendar',
+            //     children: []
+            //   },
+            //   {
+            //     key: '/kuQuestionnaire',
+            //     name: '问卷库',
+            //     icon_src: 'appstore',
+            //     children: []
+            //   }
+            // ]}
+
+            // />:
+            <Subside
+              title="意见反馈"
+              
+              onClickItem={this.onClickYiJian.bind(this)}
+              current={this.props.location.pathname}
+              menuData={[
+                {
+                  key: `/lookidea?access_token=${sessionStorage.getItem('access_token')}`,
+                  name: '查看意见',
+                  icon_src: 'aliwangwang',
+                  children: []
+                },
+                {
+                  key: `/setidea?access_token=${sessionStorage.getItem('access_token')}`,
+                  name: '设置类型',
+                  icon_src: 'setting',
+                  children: []
+                }
+              ]}
             />
           }
           <Routers {...this.props} />

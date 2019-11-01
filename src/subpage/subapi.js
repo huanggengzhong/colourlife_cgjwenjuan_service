@@ -7,14 +7,17 @@ var url = document.domain,
     } else if (url === 'wenjuan-cgjtest.colourlife.com') {
         targetUrl = 'https://service-czytest.colourlife.com'
     } else {
-        // targetUrl = 'https://service-czytest.colourlife.com'
-        targetUrl = 'https://yjfk-backend-czytest.colourlife.com'
+        targetUrl = 'https://service-czytest.colourlife.com'
+        // targetUrl = 'https://yjfk-backend-czytest.colourlife.com'
     }
     
-    // 2019年9月24日15:16:09增加的
+   
     var baseUrl;
-if (url == "service-czy.colourlife.com") {
-    baseUrl = "https://service-czy.colourlife.com/"
+// if (url == "service-czy.colourlife.com") {
+//     baseUrl = "https://service-czy.colourlife.com/"
+ // 2019年9月24日15:16:09增加的
+if (url == "https://yjfk-backend-czy.colourlife.com") {
+    baseUrl = "https://yjfk-backend-czy.colourlife.com"
    
 } 
 else {

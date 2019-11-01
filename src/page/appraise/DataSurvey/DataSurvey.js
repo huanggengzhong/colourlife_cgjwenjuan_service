@@ -21,7 +21,7 @@ class DataSurvey extends Component {
                 className="bread-pingjia"
                 style={{ marginLeft: 10 }}
               >
-                <i class="iconfont icon-fanhui1" style={{ marginLeft: '0px', marginRight: '10px',fontSize:'18px' }} onClick={()=>{
+                <i className="iconfont icon-fanhui1" style={{ marginLeft: '0px', marginRight: '10px',fontSize:'18px' }} onClick={()=>{
                   console.log(11);
                   this.props.history.goBack(-1);
                 }}></i>

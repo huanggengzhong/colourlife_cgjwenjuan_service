@@ -49,8 +49,9 @@ class Router extends Component {
         <Route exact path="/setidea" component={Setidea} />
         {/* 设置默认打开页 */}
         {
-          HASH==='/questionnaire'?<Route exact path="/" component={NowQuestionnaire} />:<Route exact path="/" component={Lookidea} />
+          // HASH==='/questionnaire'?<Route exact path="/" component={NowQuestionnaire} />:<Route exact path="/" component={Lookidea} />
         }
+        <Route exact path="/" component={Lookidea} />
         
       </div>
     )

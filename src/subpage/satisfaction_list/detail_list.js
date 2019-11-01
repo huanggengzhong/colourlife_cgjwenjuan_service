@@ -40,20 +40,7 @@ export default class detail_list extends React.Component {
         var r = this.props.location.search.substr(1).match(reg); 
         if (r!=null) return (r[2]); return null; 
         }
-    // handleOk = (e) => {
-    //     console.log(e);
-    //     this.setState({
-    //       visible: false,
-    //     });
-    //   }
-    
-    //   handleCancel = (e) => {
-    //     console.log(e);
-    //     this.setState({
-    //       visible: false,
-    //     });
-    //   }
-      //查看详情
+
     getDetail=(id)=>{
         api.getQuestionList({access_token:this.state.access_token,id:id}).then(res=>{
             if(res.code===0){
@@ -147,25 +134,14 @@ export default class detail_list extends React.Component {
                         width={100}
                         render={(text, record) => (
                            <div>
-                               {/* <Button type='primary' onClick={()=>{
-                               
-                           }}  size='small'>编辑</Button> */}
+                           
                            <Button type='primary' onClick={this.getDetail.bind(this,text.id)} size='small'>详情</Button>
-                           {/* <Button style={{marginLeft:10}} onClick={this.delete.bind(this,record)}  type='danger' size='small'>删除</Button> */}
+                        
                            </div>
                         )}/>
                 </Table>
 
-                {/* 弹窗 */}
-                {/* <Modal
-                    title="问卷详情"
-                    visible={this.state.visible}
-                    onOk={this.handleOk}
-                    onCancel={this.handleCancel}>
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
-                </Modal> */}
+  
         </div>)
     }
 

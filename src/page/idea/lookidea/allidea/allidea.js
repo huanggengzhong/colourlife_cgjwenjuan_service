@@ -1,10 +1,8 @@
-
-
 import React, { Component } from 'react'
 import history from './../../../../router/history'
 import {
-    Menu,
-     Dropdown,
+  Menu,
+  Dropdown,
   Input,
   Button,
   Table,
@@ -14,9 +12,10 @@ import {
   Icon,
   Tag,
   InputNumber,
-
   DatePicker,
-  Radio
+  Radio,
+  Col,
+  Row
 } from 'antd'
 import apis from './../../../../subpage/subapi'
 import './allidea.css'
@@ -31,13 +30,14 @@ import './allidea.css'
 //         <Icon type="border" />
 //         按选项文本下载
 //       </Menu.Item>
-    
+
 //     </Menu>
 //   );
 export default class Show extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      yijiancontent:'',
       userName: null,
       modalVisible: false,
       access_token: null,
@@ -59,12 +59,10 @@ export default class Show extends Component {
       isStaff: null,
       version: '请选择',
       sex: null,
-      community: '请输入小区',
+      community: '请选择小区',
       phone: null,
       nickname: null,
-      questionList: [
-       
-      ],
+      questionList: [],
       answerList: [
         { name: '非常满意', id: 1 },
         { name: '满意', id: 2 },
@@ -94,8 +92,8 @@ export default class Show extends Component {
     }
     apis.get(params, `backend/versionList`).then(res => {
       if (res.code == 0) {
-        console.log(res);
-        
+        console.log(res)
+
         this.setState({
           versionList: res.content
         })
@@ -124,9 +122,10 @@ export default class Show extends Component {
       page: 1,
       page_size: this.state.pageSize
     }
-    apis.get(params, `backend/search`).then(res => {
-      console.log(res);
-      
+    // apis.get(params, `backend/search`).then(res => {
+    apis.get(params, `backend/feedback/list`).then(res => {
+      console.log(res)
+
       if (res.code == 0) {
         this.setState({
           data: res.content.list,
@@ -162,7 +161,8 @@ export default class Show extends Component {
       page: this.state.currentPage,
       page_size: this.state.pageSize
     }
-    apis.get(params, `backend/search`).then(res => {
+    // apis.get(params, `backend/search`).then(res => {
+    apis.get(params, `backend/feedback/list`).then(res => {
       if (res.code == 0) {
         this.setState({
           data: res.content.list,
@@ -304,6 +304,11 @@ export default class Show extends Component {
       nickname: e.target.value
     })
   }
+  yijiancontent = e => {
+    this.setState({
+      yijiancontent: e.target.value
+    })
+  }
   search = () => {
     this.fetchData()
     // var reg = 11 && /^((13|14|15|16|17|18)[0-9]{1}\d{8})$/;  //手机号正则
@@ -313,17 +318,24 @@ export default class Show extends Component {
   }
   clear = () => {
     // dateString = ['','']
-    this.setState({
-      // startTime: null,
-      // endTime: null,
-      way: null,
-      isStaff: null,
-      version: '请选择',
-      sex: null,
-      community: '请输入小区',
-      phone: null,
-      nickname: null
-    })
+    this.setState(
+      {
+        startTime: null,
+        endTime: null,
+        way: null,
+        // isStaff: null,
+        version: '请选择',
+        sex: null,
+        community: '请选择小区',
+        phone: null,
+        nickname: null,
+        yijiancontent:''
+      },
+      () => {
+        // this.searchCommunity()
+        this.fetchData()
+      }
+    )
   }
   setModalVisible(val) {
     this.setState({ modalVisible: val })
@@ -386,13 +398,35 @@ export default class Show extends Component {
   tofixed = val => {
     return Number(val).toFixed(1) + '%'
   }
-  goIdeaDetail=(item)=>{
-    console.log(item.id);
-    let pathData={
-      pathname:'/lookidea/detail',
-      query:item.id
+  goIdeaDetail = item => {
+    console.log(item.id)
+    let pathData = {
+      pathname: `/lookidea/detail/${item.id}?access_token=${window.sessionStorage.getItem("access_token")}`,
+      query: item.id
     }
-   history.push(`/lookidea/detail/${item.id}`)
+    // history.push(`/lookidea/detail/${item.id}?access_token=${window.sessionStorage.getItem("access_token")}`)
+    history.push(pathData)
+  }
+  Download = () => {
+    var url = document.domain
+    var baseUrl
+    if (url == 'https://yjfk-backend-czy.colourlife.com') {
+      baseUrl = 'https://yjfk-backend-czy.colourlife.com'
+    } else {
+      baseUrl = 'https://yjfk-backend-czytest.colourlife.com'
+    }
+    // console.log(this.state.yijiancontent);
+    
+    // 后续记得检查数据是否有错,目前发现少了内容
+    window.location.href = `${baseUrl}/backend/feedback/excel?access_token=${window.sessionStorage.getItem(
+      'access_token'
+    )}&time_start=${this.state.startTime}&time_end=${
+      this.state.endTime
+    }&from_type=${this.state.way}&version=${this.state.version}&gender=${
+      this.state.sex
+    }&community_id=${this.state.community}&mobile=${
+      this.state.phone
+    }&nick_name=${this.state.nickname}`
   }
   render() {
     const { RangePicker } = DatePicker
@@ -403,20 +437,34 @@ export default class Show extends Component {
       {
         title: '状态',
         align: 'center',
-        dataIndex: 'user_state',
-        key: 'user_state',
+        dataIndex: 'is_replay',
+        key: 'is_replay',
         width: 100,
-        render: text => 
-        // <Tag color="#87d068">已回复</Tag>
-        <Tag color="#f50">未回复</Tag>
-    
+        // render: text =>
+        // // <Tag color="#87d068">已回复</Tag>
+        // <Tag color="#f50">未回复</Tag>
+        render: text => {
+          if (text === 0) {
+            return (
+              <Tag color="#f50" style={{ padding: 0 }}>
+                未回复
+              </Tag>
+            )
+          } else if (text === 1) {
+            return (
+              <Tag color="#87d068" style={{ padding: 0 }}>
+                已回复
+              </Tag>
+            )
+          }
+        }
       },
       {
         title: '用户ID',
         align: 'center',
         dataIndex: 'user_id',
         key: 'user_id',
-        width: 60,
+        width: 160,
         render: text => <span>{text}</span>
       },
       {
@@ -424,7 +472,7 @@ export default class Show extends Component {
         align: 'center',
         dataIndex: 'nick_name',
         key: 'nick_name',
-        width: 160,
+        width: 100,
         render: text => <span>{text}</span>
       },
       {
@@ -432,7 +480,7 @@ export default class Show extends Component {
         align: 'center',
         dataIndex: 'mobile',
         key: 'mobile',
-        width: 100,
+        width: 140,
         render: text => <span>{text}</span>
       },
       {
@@ -443,29 +491,30 @@ export default class Show extends Component {
         width: 150,
         render: text => <span>{text}</span>
       },
-    //   {
-    //     title: '员工',
-    //     align: 'center',
-    //     dataIndex: 'is_employee',
-    //     key: 'is_employee',
-    //     width: 100,
-    //     render: text => <span>{this.renderEmployee(text)}</span>
-    //   },
-    //   {
-    //     title: '性别',
-    //     align: 'center',
-    //     dataIndex: 'gender',
-    //     key: 'gender',
-    //     width: 100,
-    //     render: text => <span>{this.renderGender(text)}</span>
-    //   },
+      //   {
+      //     title: '员工',
+      //     align: 'center',
+      //     dataIndex: 'is_employee',
+      //     key: 'is_employee',
+      //     width: 100,
+      //     render: text => <span>{this.renderEmployee(text)}</span>
+      //   },
+      //   {
+      //     title: '性别',
+      //     align: 'center',
+      //     dataIndex: 'gender',
+      //     key: 'gender',
+      //     width: 100,
+      //     render: text => <span>{this.renderGender(text)}</span>
+      //   },
       {
         title: '渠道',
         align: 'center',
         dataIndex: 'from_type',
         key: 'from_type',
         width: 100,
-        render: text => <span>{this.renderWay(text)}</span>
+        render: text => <span>{text}</span>
+        // render: text => <span>{this.renderWay(text)}</span>
       },
       {
         title: '版本',
@@ -478,20 +527,20 @@ export default class Show extends Component {
       {
         title: '分类',
         align: 'center',
-        dataIndex: 'fenlei',
-        key: 'fenlei',
+        dataIndex: 'feedback_type',
+        key: 'feedback_type',
         width: 100,
-        render: text => <span>分类</span>
+        render: text => <span>{text}</span>
       },
-          {
+      {
         title: '意见详情',
         align: 'center',
-        dataIndex: 'yijianxiangqing',
-        key: 'yijianxiangqing',
-        width: 250,
-        render: text => <span>意见详情意见详情意见详情意见详情意见详情</span>
+        dataIndex: 'content',
+        key: 'content',
+        width: 450,
+        render: text => <span>{text}</span>
       },
-  
+
       {
         title: '操作',
         align: 'center',
@@ -499,32 +548,51 @@ export default class Show extends Component {
         width: 150,
         // fixed: 'right',
         render: (item, record) => (
-          
-          <a onClick={()=>{this.goIdeaDetail(item)}}>查看</a>
+          <a
+            onClick={() => {
+              this.goIdeaDetail(item)
+            }}
+          >
+            查看
+          </a>
         )
       }
     ]
     return (
-      <div className="show">
-    
-        <div className="search_box" style={{ position: 'relative' }}>
-          <div className="search_content">
-            <div className="evaluation_time search_item">
-              <span className="txt">评价时间：</span>
-              <RangePicker
-                placeholder={['开始日期', '结束日期']}
-                size="small"
-                onChange={this.selectTime}
-              />
-            </div>
-            <div className="way search_item">
-              <span className="txt">渠道：</span>
-              <RadioGroup onChange={this.selectWay} value={this.state.way}>
-                <Radio value="1">ios</Radio>
-                <Radio value="2">android</Radio>
-              </RadioGroup>
-            </div>
-            {/* <div className="staff search_item">
+      <div style={{ position: 'relative' }}>
+        <Row>
+          <Col span={24}>
+            <Button
+              type="primary"
+              className="lookdetail-daochu"
+              style={{ position: 'absolute', top: '-57px', right: '7px' }}
+              onClick={this.Download}
+            >
+              导出
+            </Button>
+          </Col>
+        </Row>
+        {/* 2019年10月16日11:22:30增加的 */}
+
+        <div className="show">
+          <div className="search_box" style={{ position: 'relative' }}>
+            <div className="search_content">
+              <div className="evaluation_time search_item">
+                <span className="txt">评价时间：</span>
+                <RangePicker
+                  placeholder={['开始日期', '结束日期']}
+                  size="small"
+                  onChange={this.selectTime}
+                />
+              </div>
+              <div className="way search_item">
+                <span className="txt">渠道：</span>
+                <RadioGroup onChange={this.selectWay} value={this.state.way}>
+                  <Radio value="1">ios</Radio>
+                  <Radio value="2">android</Radio>
+                </RadioGroup>
+              </div>
+              {/* <div className="staff search_item">
               <span className="txt">员工：</span>
               <RadioGroup
                 onChange={this.selectIsStaff}
@@ -534,153 +602,155 @@ export default class Show extends Component {
                 <Radio value="2">否</Radio>
               </RadioGroup>
             </div> */}
-            <div className="version search_item">
-              <span className="txt">版本：</span>
-              <Select
-                size="small"
-                defaultValue="请选择"
-                style={{ width: 100 }}
-                onChange={this.selectVersion}
-                value={this.state.version}
+              <div className="version search_item">
+                <span className="txt">版本：</span>
+                <Select
+                  size="small"
+                  defaultValue="请选择"
+                  style={{ width: 100 }}
+                  onChange={this.selectVersion}
+                  value={this.state.version}
+                >
+                  {this.state.versionList.map((item, index) => (
+                    <Option value={item.version} key={index}>
+                      {item.version}
+                    </Option>
+                  ))}
+                </Select>
+              </div>
+              <div className="sex search_item">
+                <span className="txt">性别：</span>
+                <RadioGroup onChange={this.selectSex} value={this.state.sex}>
+                  <Radio value="1">男</Radio>
+                  <Radio value="2">女</Radio>
+                </RadioGroup>
+              </div>
+              <div className="community search_item">
+                <span className="txt">小区：</span>
+                <Select
+                  showSearch
+                  size="small"
+                  value={this.state.community}
+                  placeholder="请选择小区"
+                  style={{ width: 100 }}
+                  defaultActiveFirstOption={false}
+                  showArrow={false}
+                  filterOption={false}
+                  onSearch={this.searchCommunity}
+                  onChange={this.selectCommunity}
+                  notFoundContent={null}
+                >
+                  {this.state.communityList.map((item, index) => (
+                    <Option value={item} index={index}>
+                      {item.name}
+                    </Option>
+                  ))}
+                </Select>
+              </div>
+              <div className="phone search_item">
+                <span className="txt">手机号：</span>
+                <InputNumber
+                  placeholder="请输入手机号"
+                  className="phone_input"
+                  size="small"
+                  maxLength={11}
+                  onChange={this.selectPhone}
+                  value={this.state.phone}
+                />
+              </div>
+              <div className="nickname search_item">
+                <span className="txt">昵称：</span>
+                <Input
+                  placeholder="请输入昵称"
+                  className="phone_input"
+                  size="small"
+                  onChange={this.selectNickname}
+                  value={this.state.nickname}
+                />
+              </div>
+              <div className="nickname search_item">
+                <span className="txt">意见内容：</span>
+                <Input
+                  placeholder="请输入意见内容"
+                  className="phone_input"
+                  size="small"
+                  onChange={this.yijiancontent}
+                  value={this.state.yijiancontent}
+                />
+              </div>
+            </div>
+            <div className="search_btn">
+              <Button
+                type="primary"
+                style={{ marginRight: 15 }}
+                onClick={this.search}
               >
-                {this.state.versionList.map((item, index) => (
-                  <Option value={item.version} key={index}>{item.version}</Option>
-                ))}
-              </Select>
-            </div>
-            <div className="sex search_item">
-              <span className="txt">性别：</span>
-              <RadioGroup onChange={this.selectSex} value={this.state.sex}>
-                <Radio value="1">男</Radio>
-                <Radio value="2">女</Radio>
-              </RadioGroup>
-            </div>
-            <div className="community search_item">
-              <span className="txt">小区：</span>
-              <Select
-                showSearch
-                size="small"
-                value={this.state.community}
-                placeholder="请输入小区"
-                style={{ width: 100 }}
-                defaultActiveFirstOption={false}
-                showArrow={false}
-                filterOption={false}
-                onSearch={this.searchCommunity}
-                onChange={this.selectCommunity}
-                notFoundContent={null}
-              >
-                {this.state.communityList.map((item, index) => (
-                  <Option value={item} index={index}>{item.name}</Option>
-                ))}
-              </Select>
-             
-            </div>
-            <div className="phone search_item">
-              <span className="txt">手机号：</span>
-              <InputNumber
-                placeholder="请输入手机号"
-                className="phone_input"
-                size="small"
-                maxLength={11}
-                onChange={this.selectPhone}
-                value={this.state.phone}
-              />
-            </div>
-            <div className="nickname search_item">
-              <span className="txt">昵称：</span>
-              <Input
-                placeholder="请输入昵称"
-                className="phone_input"
-                size="small"
-                onChange={this.selectNickname}
-                value={this.state.nickname}
-              />
-            </div>
-            <div className="nickname search_item">
-              <span className="txt">意见内容：</span>
-              <Input
-                placeholder="请输入意见内容"
-                className="phone_input"
-                size="small"
-                // onChange={this.selectNickname}
-                // value={this.state.nickname}
-              />
+                筛选
+              </Button>
+              <Button onClick={this.clear}>重置</Button>
             </div>
           </div>
-          <div className="search_btn">
-            <Button
-              type="primary"
-              style={{ marginRight: 15 }}
-              onClick={this.search}
+
+          <div className="table_box">
+            <Table
+              columns={columns}
+              // bordered={true}
+              dataSource={data}
+              scroll={{ x: 1400 }}
+              loading={{
+                tip: 'Loading...',
+                spinning: this.state.flag
+              }}
+              pagination={{
+                current: this.state.currentPage,
+                pageSize: this.state.pageSize, //每页显示条数
+                total: this.state.total, //数据总数,  total/pageSize 等于 pagenation页码数
+                showTotal: () => {
+                  //设置显示一共几条数据
+                  return `共${this.state.total}条数据，当前第${
+                    this.state.currentPage
+                  }页`
+                }
+              }}
+              onChange={this.handleTableChange.bind(this)}
+            />
+          </div>
+          <div className="modal">
+            <Modal
+              title="满意度调查"
+              width={375}
+              centered
+              visible={this.state.modalVisible}
+              onOk={() => this.setModalVisible(false)}
+              onCancel={() => this.setModalVisible(false)}
             >
-              筛选
-            </Button>
-            <Button onClick={this.clear}>重置</Button>
-          </div>
-      
-        </div>
-     
-        <div className="table_box">
-          <Table
-            columns={columns}
-            // bordered={true}
-            dataSource={data}
-            scroll={{ x: 1400 }}
-            loading={{
-              tip: 'Loading...',
-              spinning: this.state.flag
-            }}
-            pagination={{
-              current: this.state.currentPage,
-              pageSize: this.state.pageSize, //每页显示条数
-              total: this.state.total, //数据总数,  total/pageSize 等于 pagenation页码数
-              showTotal: () => {
-                //设置显示一共几条数据
-                return `共${this.state.total}条数据，当前第${
-                  this.state.currentPage
-                }页`
-              }
-            }}
-            onChange={this.handleTableChange.bind(this)}
-          />
-        </div>
-        <div className="modal">
-          <Modal
-            title="满意度调查"
-            width={375}
-            centered
-            visible={this.state.modalVisible}
-            onOk={() => this.setModalVisible(false)}
-            onCancel={() => this.setModalVisible(false)}
-          >
-            <div className="item_box">
-              {this.state.questionList.map((item, index) => (
-                <div className="item" key={index}>
-                  <p className="question">
-                    {index + 1}、{item.question}
-                  </p>
-                  <div className="answer_box">
-                    <RadioGroup
-                      onChange={this.selectIsStaff}
-                      value={item.answer}
-                    >
-                      {this.state.answerList.map((item1, index1) => (
-                      
-                        <Radio value={5 - index1} disabled key={index1}>
-                          {item1.name}
-                        </Radio>
-                      ))}
-                    </RadioGroup>
+              <div className="item_box">
+                {this.state.questionList.map((item, index) => (
+                  <div className="item" key={index}>
+                    <p className="question">
+                      {index + 1}、{item.question}
+                    </p>
+                    <div className="answer_box">
+                      <RadioGroup
+                        onChange={this.selectIsStaff}
+                        value={item.answer}
+                      >
+                        {this.state.answerList.map((item1, index1) => (
+                          <Radio value={5 - index1} disabled key={index1}>
+                            {item1.name}
+                          </Radio>
+                        ))}
+                      </RadioGroup>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-            <div className="footer">
-              <p className="version">v {this.state.version1}</p>
-              <p className="time">提交时间：{this.state.create_at}</p>
-            </div>
-          </Modal>
+                ))}
+              </div>
+              <div className="footer">
+                <p className="version">v {this.state.version1}</p>
+                <p className="time">提交时间：{this.state.create_at}</p>
+              </div>
+            </Modal>
+          </div>
         </div>
       </div>
     )

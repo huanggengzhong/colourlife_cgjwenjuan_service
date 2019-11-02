@@ -114,12 +114,12 @@ this.getData();
                   
                 }
               </Col>
-              <Col span={2}>ID:{this.state.content.community_uuid}</Col>
-              <Col span={2}>昵称:{this.state.content.nick_name}</Col>
-              <Col span={2}>手机:{this.state.content.mobile}</Col>
-              <Col span={2}>小区:{this.state.content.community_name}</Col>
-              <Col span={2}>渠道:{this.state.content.from_type}</Col>
-              <Col span={2}>版本:{this.state.content.version}</Col>
+              <Col span={2}>ID: {this.state.content.user_id}</Col>
+              <Col span={2}>昵称: {this.state.content.nick_name}</Col>
+              <Col span={2}>手机: {this.state.content.mobile}</Col>
+              <Col span={2}>小区: {this.state.content.community_name}</Col>
+              <Col span={2}>渠道: {this.state.content.from_type===2?"android":"ios"}</Col>
+              <Col span={2}>版本: {this.state.content.version}</Col>
               {/* <Col span={3}></Col> */}
             </Row>
           </div>

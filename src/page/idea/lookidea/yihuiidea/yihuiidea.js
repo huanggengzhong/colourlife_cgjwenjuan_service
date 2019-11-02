@@ -144,6 +144,7 @@ export default class Show extends Component {
         this.state.community == '请输入小区' ? null : this.state.community_uuid,
       mobile: this.state.phone,
       nick_name: this.state.nickname,
+      content:this.state.yijiancontent,
       page: 1,
       page_size: this.state.pageSize
     }
@@ -441,15 +442,32 @@ export default class Show extends Component {
       }
   
       // 后续记得检查数据是否有错,目前发现少了内容
-      window.location.href = `${baseUrl}/backend/feedback/excel?access_token=${window.sessionStorage.getItem(
-        'access_token'
-      )}&time_start=${this.state.startTime}&time_end=${
-        this.state.endTime
-      }&from_type=${this.state.way}&version=${this.state.version}&gender=${
-        this.state.sex
-      }&community_id=${this.state.community}&mobile=${
-        this.state.phone
-      }&nick_name=${this.state.nickname}`
+      // window.location.href = `${baseUrl}/backend/feedback/excel?access_token=${window.sessionStorage.getItem(
+      //   'access_token'
+      // )}&time_start=${this.state.startTime}&time_end=${
+      //   this.state.endTime
+      // }&from_type=${this.state.way}&version=${this.state.version}&gender=${
+      //   this.state.sex
+      // }&community_id=${this.state.community}&mobile=${
+      //   this.state.phone
+      // }&nick_name=${this.state.nickname}`
+          // 重新查看下载
+          let version =null;
+          let community =null;
+          if(this.state.version!="请选择"){
+            version=this.state.version
+          }
+          if(this.state.community!="请选择小区"){
+            community=this.state.community
+          }
+          window.location.href = baseUrl+'/backend/feedback/excel?access_token='+window.sessionStorage.getItem(
+            'access_token'
+          )+'&is_reply=1'+'&time_start='+this.state.startTime+'&time_end='+
+            this.state.endTime
+          +'&from_type='+this.state.way+'&version='+version+'&gender='+this.state.sex
+          +'&community_id='+community+'&mobile='+
+            this.state.phone
+          +'&nick_name='+this.state.nickname
     }
     // 2019年10月30日19:36:54
   render() {
@@ -499,7 +517,7 @@ export default class Show extends Component {
         align: 'center',
         dataIndex: 'mobile',
         key: 'mobile',
-        width: 100,
+        width: 120,
         render: text => <span>{text}</span>
       },
       {
@@ -576,14 +594,14 @@ export default class Show extends Component {
       <div style={{ position: 'relative' }}>
       <Row>
         <Col span={24}>
-          <Button
+          {/* <Button
             type="primary"
             className="lookdetail-daochu"
             style={{ position: 'absolute', top: '-57px', right: '7px' }}
             onClick={this.Download}
           >
             导出
-          </Button>
+          </Button> */}
         </Col>
       </Row>
         {/* 2019年10月16日11:22:30增加的 */}
